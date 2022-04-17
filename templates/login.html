@@ -1,50 +1,74 @@
 <HTML>
     <HEAD>
         <Link rel="stylesheet" href="../static/css/login.css">
-        <Script src="../static/js/login.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
 	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
         <script src="https://kit.fontawesome.com/0a05ea1ff3.js" crossorigin="anonymous"></script>
         <script src="../static/js/jquery-3.4.1.min.js"></script>
         <script src="../static/js/bootstrap-4.4.1.js"></script>
+
+        <script>
+          jQuery(document).ready(function($) {
+          tab = $('.tabs h3 a');
+        
+          tab.on('click', function(event) {
+            event.preventDefault();
+            tab.removeClass('active');
+            $(this).addClass('active');
+        
+            tab_content = $(this).attr('href');
+            $('div[id$="tab-content"]').removeClass('active');
+            $(tab_content).addClass('active');
+          });
+        });
+        </script>
     </HEAD>
 
     <BODY>
         <div class="form-wrap">
             <div class="tabs">
-              <h3 class="signup-tab"><a class="active" href="#signup-tab-content">Sign Up</a></h3>
-              <h3 class="login-tab"><a href="#login-tab-content">Login</a></h3>
+              <h3 class="signup-tab"><a class="active" href="#signup-tab-content">Customer</a></h3>
+              <h3 class="login-tab"><a href="#login-tab-content">Seller</a></h3>
+              <h3 class="manager-tab"><a href="#manager-tab-content">Manager</a></h3>
             </div><!--.tabs-->
         
             <div class="tabs-content">
               <div id="signup-tab-content" class="active">
                 <form class="signup-form" action="" method="post">
-                  <input type="email" class="input" id="user_email" autocomplete="off" placeholder="Email">
                   <input type="text" class="input" id="user_name" autocomplete="off" placeholder="Username">
                   <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password">
-                  <input type="submit" class="button" value="Sign Up">
+                  <input type="submit" class="button" value="Login">
                 </form><!--.login-form-->
                 <div class="help-text">
-                  <p>By signing up, you agree to our</p>
-                  <p><a href="#">Terms of service</a></p>
+                  <p><a href="#">Don't have an account? Sign Up</a></p>
                 </div><!--.help-text-->
               </div><!--.signup-tab-content-->
         
               <div id="login-tab-content">
                 <form class="login-form" action="" method="post">
-                  <input type="text" class="input" id="user_login" autocomplete="off" placeholder="Email or Username">
+                  <input type="text" class="input" id="user_login" autocomplete="off" placeholder="Username">
                   <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password">
-                  <input type="checkbox" class="checkbox" id="remember_me">
-                  <label for="remember_me">Remember me</label>
         
                   <input type="submit" class="button" value="Login">
                 </form><!--.login-form-->
                 <div class="help-text">
-                  <p><a href="#">Forget your password?</a></p>
+                  <p><a href="#">Don't have an account? Sign Up</a></p>
+                </div><!--.help-text-->
+              </div><!--.login-tab-content-->
+
+              <div id="manager-tab-content">
+                <form class="login-form" action="" method="post">
+                  <input type="text" class="input" id="user_login" autocomplete="off" placeholder="Username">
+                  <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password">
+        
+                  <input type="submit" class="button" value="Login">
+                </form><!--.login-form-->
+                <div class="help-text">
+                  <p><a href="#">Don't have an account? Sign Up</a></p>
                 </div><!--.help-text-->
               </div><!--.login-tab-content-->
             </div><!--.tabs-content-->
-          </div><!--.form-wrap-->        
+          </div><!--.form-wrap-->    
     </BODY>
 </HTML>
