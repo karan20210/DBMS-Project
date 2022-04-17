@@ -1,0 +1,13 @@
+insert into Deliveries (Order_ID, DP_ID , Order_Status) values (1, 1, 'DISPATCHED');
+insert into Deliveries (Order_ID, DP_ID , Order_Status) values (2, 1, 'Delivered');
+insert into Deliveries (Order_ID, DP_ID , Order_Status) values (3, 1, 'Picked Up');
+insert into Deliveries (Order_ID, DP_ID , Order_Status) values (4, 1, 'DISPATCHED');
+insert into Deliveries (Order_ID, DP_ID , Order_Status) values (5, 2, 'DISPATCHED');
+insert into Deliveries (Order_ID, DP_ID , Order_Status) values (6, 2, 'Delivered');
+insert into Deliveries (Order_ID, DP_ID , Order_Status) values (7, 3, 'Picked Up');
+insert into Deliveries (Order_ID, DP_ID , Order_Status) values (8, 3, 'DISPATCHED');
+insert into Deliveries (Order_ID, DP_ID , Order_Status) values (6, 4, 'Delivered');
+insert into Deliveries (Order_ID, DP_ID , Order_Status) values (8, 4, 'DISPATCHED');
+insert into Deliveries (Order_ID, DP_ID , Order_Status) values (9, 5, 'DISPATCHED');
+insert into Deliveries (Order_ID, DP_ID , Order_Status) values (10, 6, 'Picked Up');
+insert into Deliveries (Order_ID, DP_ID , Order_Status) values (11, 7, 'DISPATCHED');
