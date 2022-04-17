@@ -1,0 +1,10 @@
+insert into CATEGORIES (Category_ID, Category_Name) values (1, 'Laptops');
+insert into CATEGORIES (Category_ID, Category_Name) values (2, 'Washing Machine');
+insert into CATEGORIES (Category_ID, Category_Name) values (3, 'Cycle');
+insert into CATEGORIES (Category_ID, Category_Name) values (4, 'Shirts');
+insert into CATEGORIES (Category_ID, Category_Name) values (5, 'Kurtas');
+insert into CATEGORIES (Category_ID, Category_Name) values (6, 'Shoes');
+insert into CATEGORIES (Category_ID, Category_Name) values (7, 'Trousers');
+insert into CATEGORIES (Category_ID, Category_Name) values (8, 'Headphones');
+insert into CATEGORIES (Category_ID, Category_Name) values (9, 'Mobiles');
+insert into CATEGORIES (Category_ID, Category_Name) values (10, 'Refrigerator');
