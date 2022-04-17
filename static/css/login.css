@@ -19,7 +19,7 @@ body {
 
 .form-wrap {
   background-color: #fff;
-  width: 320px;
+  width: 520px;
   margin: 3em auto;
   box-shadow: 0px 1px 8px #BEBEBE;
   -webkit-box-shadow: 0px 1px 8px #BEBEBE;
@@ -28,7 +28,7 @@ body {
     overflow: hidden; }
     .form-wrap .tabs h3 {
       float: left;
-      width: 50%; }
+      width: 33.3%; }
       .form-wrap .tabs h3 a {
         padding: 0.5em 0;
         text-align: center;
