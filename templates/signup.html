@@ -43,6 +43,9 @@
                   <input type="password" class="input" id="password" autocomplete="off" placeholder="Password" name="Password" required> 
                   <input type="submit" class="button" value="Signup As Customer">
                 </form><!--.customer-form-->
+                <div class="help-text">
+                  <p><a href = {{ url_for('login') }}>Already Signed up? Login here</a></p>
+                </div><!--.help-text-->
               </div><!--.customer-tab-content-->
         
               <div id="seller-tab-content">
@@ -55,6 +58,9 @@
                   <input type="password" class="input" id="password" autocomplete="off" placeholder="Password" name="Password" required> 
                   <input type="submit" class="button" value="Signup As Seller">
                 </form><!--.customer-form-->
+                <div class="help-text">
+                  <p><a href = {{ url_for('login') }}>Already Signed up? Login here</a></p>
+                </div><!--.help-text-->
               </div><!--.customer-tab-content-->
             </div><!--.tabs-content-->
           </div><!--.form-wrap-->    
