@@ -1,6 +1,6 @@
 <HTML>
     <HEAD>
-      <Link rel="stylesheet" href="../static/css/login.css">
+      <Link rel="stylesheet" href="../static/css/signup.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
 	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -30,14 +30,17 @@
             <div class="tabs">
               <h3 class="customer-tab"><a class="active" href="#customer-tab-content">Customer</a></h3>
               <h3 class="seller-tab"><a href="#seller-tab-content">Seller</a></h3>
-              <h3 class="manager-tab"><a href="#manager-tab-content">Manager</a></h3>
             </div><!--.tabs-->
         
             <div class="tabs-content">
               <div id="customer-tab-content" class="active">
                 <form class="customer-form" action="" method="post">
                   <input type="text" class="input" id="user_name" autocomplete="off" placeholder="Username">
-                  <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password">
+                  <input type="text" class="input" id="name" autocomplete="off" placeholder="Name">
+                  <input type="text" class="input" id="email" autocomplete="off" placeholder="Email">
+                  <input type="text" class="input" id="contact_no" autocomplete="off" placeholder="Contact Number">
+                  <input type="text" class="input" id="address" autocomplete="off" placeholder="Address">
+                  <input type="password" class="input" id="password" autocomplete="off" placeholder="Password">
                   <input type="submit" class="button" value="Login">
                 </form><!--.customer-form-->
                 <div class="help-text">
