@@ -1,14 +1,11 @@
 CREATE DATABASE PROJECT;
 use PROJECT;
 
-CREATE TABLE `USER` (
-	`Username` VARCHAR(50) NOT NULL UNIQUE,
-    `Password` VARCHAR(20) NOT NULL,
-    `Type` VARCHAR(10)
-);
+create table `Department`(`Department_ID` int check(Department_ID>0), `Department_Name` varchar(40) not null unique, primary key(department_id));
+create table `Manager`(`Manager_ID` int check(manager_id>0), `Manager_Name` varchar(100) not null,`Department_ID` int, foreign key(Department_ID) references Department(Department_ID) ,primary key(Manager_Id));
 
 CREATE TABLE `CUSTOMER` (
-  `Customer_ID` Integer NOT NULL,
+  `Customer_ID` Integer NOT NULL check(Customer_ID>0),
   `Name` VARCHAR(50) NOT NULL,
   `Email` VARCHAR(500) NOT NULL UNIQUE,
   `Contact_No` VARCHAR(15) NOT NULL,
