@@ -39,15 +39,18 @@ def customerlogin():
 
     for i in records:
         if username == i[0] and pwd == i[1]:
-            print("Success")
-            break
+            # Getting details of the logged in customer to send to HTML
+            s = "select * from customer where customer_ID = " + str(i[2])
+            cur.execute(s)
+            d = cur.fetchall()[0]
+
+            return render_template('homepage.html', details = d)
         else:
             print("Failure")
     mysql.connection.commit()
     cur.close()
 
     return render_template('login.html')
-
 
 @app.route("/sellerlogin", methods = ['POST'])
 def sellerlogin():
@@ -89,7 +92,7 @@ def managerlogin():
     for i in records:
         if username == i[0] and pwd == i[1]:
             print("Success")
-            break
+            return render_template('homepage.html')
         else:
             print("Failure")
     mysql.connection.commit()
