@@ -35,9 +35,9 @@
         
             <div class="tabs-content">
               <div id="customer-tab-content" class="active">
-                <form class="customer-form" action="" method="post">
-                  <input type="text" class="input" id="user_name" autocomplete="off" placeholder="Username">
-                  <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password">
+                <form class="customer-form" action="/customerlogin" method="post">
+                  <input type="text" class="input" id="user_name" autocomplete="off" placeholder="Username" name = "username">
+                  <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password" name = "password">
                   <input type="submit" class="button" value="Login">
                 </form><!--.customer-form-->
                 <div class="help-text">
@@ -46,9 +46,9 @@
               </div><!--.customer-tab-content-->
         
               <div id="seller-tab-content">
-                <form class="seller-form" action="" method="post">
-                  <input type="text" class="input" id="user_login" autocomplete="off" placeholder="Username">
-                  <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password">
+                <form class="seller-form" action="/sellerlogin" method="post">
+                  <input type="text" class="input" id="user_login" autocomplete="off" placeholder="Username" name = "username">
+                  <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password" name = "password">
                   <input type="submit" class="button" value="Login">
                 </form><!--.seller-form-->
                 <div class="help-text">
@@ -57,9 +57,9 @@
               </div><!--.seller-tab-content-->
 
               <div id="manager-tab-content">
-                <form class="manager-form" action="" method="post">
-                  <input type="text" class="input" id="user_login" autocomplete="off" placeholder="Username">
-                  <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password">
+                <form class="manager-form" action="/managerlogin" method="post">
+                  <input type="text" class="input" id="user_login" autocomplete="off" placeholder="Username" name = "username">
+                  <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password" name = "password">
                   <input type="submit" class="button" value="Login">
                 </form><!--.manager-form-->
                 <div class="help-text">

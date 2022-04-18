@@ -1,17 +1,22 @@
 CREATE DATABASE PROJECT;
 use PROJECT;
 
-CREATE TABLE `User` (
-  `User_ID` Integer NOT NULL,
-  `Username` VARCHAR(50) NOT NULL UNIQUE,
-  `Password` VARCHAR(50) NOT NULL,
+-- DROP DATABASE PROJECT;
+CREATE TABLE `USER` (
+	`Username` VARCHAR(50) NOT NULL UNIQUE,
+    `Password` VARCHAR(20) NOT NULL,
+    `Type` VARCHAR(10)
+);
+
+CREATE TABLE `Customer` (
+  `Customer_ID` Integer NOT NULL,
   `Name` VARCHAR(50) NOT NULL,
   `Email` VARCHAR(500) NOT NULL UNIQUE,
   `Contact_No` VARCHAR(15) NOT NULL,
   `Reg_Date` Date,
   `Address` VARCHAR(50) NOT NULL,
   `Points` Integer DEFAULT 0,
-  PRIMARY KEY (`User_ID`)
+  PRIMARY KEY (`Customer_ID`)
 );
 
 CREATE TABLE `CATEGORIES` (
@@ -47,45 +52,45 @@ CREATE TABLE `Reviews` (
     `Review_ID` INTEGER NOT NULL,
     `Text` VARCHAR(500),
     `Stars` INTEGER NOT NULL,
-    `User_ID` INTEGER NOT NULL,
+    `Customer_ID` INTEGER NOT NULL,
     `Product_ID` INTEGER NOT NULL,
     `TimeStamp` TIMESTAMP NOT NULL,
     PRIMARY KEY (`Review_ID`),
-    FOREIGN KEY (User_ID)
-        REFERENCES USER (User_ID),
+    FOREIGN KEY (Customer_ID)
+        REFERENCES CUSTOMER (Customer_ID),
     FOREIGN KEY (Product_ID)
         REFERENCES PRODUCTS (Product_ID)
 );
 
 CREATE TABLE `Cart` (
   `Cart_ID` Integer,
-  `User_ID` Integer NOT NULL,
+  `Customer_ID` Integer NOT NULL,
   `Product_ID` Integer NOT NULL,
   `Quantity_Ordered` Integer DEFAULT 1,
-  PRIMARY KEY (`Cart_ID`,`User_ID`,`Product_ID`),
-FOREIGN KEY(User_ID) REFERENCES USER(User_ID), 
+  PRIMARY KEY (`Cart_ID`,`Customer_ID`,`Product_ID`),
+FOREIGN KEY(Customer_ID) REFERENCES Customer(Customer_ID), 
 FOREIGN KEY(Product_ID) REFERENCES PRODUCTS(Product_ID)
 );
 
 CREATE TABLE `Payment` (
   `Payment_ID` Integer NOT NULL,
-  `User_ID` Integer NOT NULL,
+  `Customer_ID` Integer NOT NULL,
   `Type` VARCHAR(50) NOT NULL,
   `Status` VARCHAR(15) NOT NULL,
   `Date` Date NOT NULL,
   `Amount` Float NOT NULL,
   PRIMARY KEY (`Payment_ID`), 
-FOREIGN KEY(User_ID) REFERENCES USER(User_ID) 
+FOREIGN KEY(Customer_ID) REFERENCES Customer(Customer_ID) 
 );
 
 CREATE TABLE `Orders` (
   `Order_ID` Integer,
-  `User_ID` Integer NOT NULL,
+  `Customer_ID` Integer NOT NULL,
   `Date_Of_Delivery` Date NOT NULL,
   `Payment_ID` Integer NOT NULL,
   `Cart_ID` Integer NOT NULL,
   PRIMARY KEY (`Order_ID`), 
-FOREIGN KEY(User_ID) REFERENCES Cart(User_ID), 
+FOREIGN KEY(Customer_ID) REFERENCES Cart(Customer_ID), 
 FOREIGN KEY(Payment_ID) REFERENCES Payment(Payment_ID),
 FOREIGN KEY(Cart_ID) REFERENCES Cart(Cart_ID)
 
@@ -124,12 +129,12 @@ CREATE TABLE `Customer_Care` (
 
 CREATE TABLE `Customer_Queries` (
   `Query_ID` Integer,
-  `User_ID` Integer,
+  `Customer_ID` Integer,
   `CC_ID` Integer,
   `Time` Timestamp,
   `Query` VARCHAR(200),
   PRIMARY KEY (`Query_ID`),
-FOREIGN KEY(User_ID) REFERENCES USER(User_ID),
+FOREIGN KEY(Customer_ID) REFERENCES Customer(Customer_ID),
 FOREIGN KEY(CC_ID) REFERENCES Customer_Care(CC_ID)
 );
 
