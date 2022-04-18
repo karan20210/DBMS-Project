@@ -96,7 +96,54 @@ def managerlogin():
     cur.close()
 
     return render_template('login.html')
+
+@app.route("/cclogin", methods = ['POST'])
+def cclogin():
+     # Getting data from form request
+    username = request.form['username']
+    pwd = request.form['password']
+
+    # Checking whether it exists in the DB or not
+    cur = mysql.connection.cursor()
+    cur.execute("select username,password,CCID from CC_LoginDetails")
     
+    records = cur.fetchall()
+    print(records)
+
+    for i in records:
+        if username == i[0] and pwd == i[1]:
+            print("Success")
+            break
+        else:
+            print("Failure")
+    mysql.connection.commit()
+    cur.close()
+
+    return render_template('login.html')
+
+@app.route("/dplogin", methods = ['POST'])
+def dplogin():
+     # Getting data from form request
+    username = request.form['username']
+    pwd = request.form['password']
+
+    # Checking whether it exists in the DB or not
+    cur = mysql.connection.cursor()
+    cur.execute("select username,password,DPID from DP_LoginDetails")
+    
+    records = cur.fetchall()
+    print(records)
+
+    for i in records:
+        if username == i[0] and pwd == i[1]:
+            print("Success")
+            break
+        else:
+            print("Failure")
+    mysql.connection.commit()
+    cur.close()
+
+    return render_template('login.html')    
 
 @app.route("/customersignup", methods = ['POST'])
 def customerSignup():
