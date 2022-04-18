@@ -34,30 +34,28 @@
         
             <div class="tabs-content">
               <div id="customer-tab-content" class="active">
-                <form class="customer-form" action="" method="post">
-                  <input type="text" class="input" id="user_name" autocomplete="off" placeholder="Username">
-                  <input type="text" class="input" id="name" autocomplete="off" placeholder="Name">
-                  <input type="text" class="input" id="email" autocomplete="off" placeholder="Email">
-                  <input type="text" class="input" id="contact_no" autocomplete="off" placeholder="Contact Number">
-                  <input type="text" class="input" id="address" autocomplete="off" placeholder="Address">
-                  <input type="password" class="input" id="password" autocomplete="off" placeholder="Password">
-                  <input type="submit" class="button" value="Login">
+                <form class="customer-form" action="/customersignup" method="post">
+                  <input type="text" class="input" id="user_name" autocomplete="off" placeholder="Username" name = "Username" required>
+                  <input type="text" class="input" id="name" autocomplete="off" placeholder="Name" name = "Name" required>
+                  <input type="email" class="input" id="email" autocomplete="off" placeholder="Email" name="Email" required>
+                  <input type="tel" class="input" id="contact_no" autocomplete="off" pattern="[0-9]{10}" placeholder="Contact Number" name="Contact_Number" required>
+                  <input type="text" class="input" id="address" autocomplete="off" placeholder="Address" name="Address" required>
+                  <input type="password" class="input" id="password" autocomplete="off" placeholder="Password" name="Password" required> 
+                  <input type="submit" class="button" value="Signup As Customer">
                 </form><!--.customer-form-->
-                <div class="help-text">
-                  <p><a href="./signup.html">Don't have an account? Sign Up</a></p>
-                </div><!--.help-text-->
               </div><!--.customer-tab-content-->
         
               <div id="seller-tab-content">
-                <form class="seller-form" action="" method="post">
-                  <input type="text" class="input" id="user_login" autocomplete="off" placeholder="Username">
-                  <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password">
-                  <input type="submit" class="button" value="Login">
-                </form><!--.seller-form-->
-                <div class="help-text">
-                  <p><a href="./signup.html">Don't have an account? Sign Up</a></p>
-                </div><!--.help-text-->
-              </div><!--.seller-tab-content-->
+                <form class="seller-form" action="/sellersignup" method="post">
+                  <input type="text" class="input" id="user_name" autocomplete="off" placeholder="Username" name = "Username" required>
+                  <input type="text" class="input" id="name" autocomplete="off" placeholder="Name" name = "Name" required>
+                  <input type="email" class="input" id="email" autocomplete="off" placeholder="Email" name="Email" required>
+                  <input type="tel" class="input" id="contact_no" autocomplete="off" pattern="[0-9]{10}" placeholder="Contact Number" name="Contact_Number" required>
+                  <input type="text" class="input" id="address" autocomplete="off" placeholder="Address" name="Address" required>
+                  <input type="password" class="input" id="password" autocomplete="off" placeholder="Password" name="Password" required> 
+                  <input type="submit" class="button" value="Signup As Seller">
+                </form><!--.customer-form-->
+              </div><!--.customer-tab-content-->
             </div><!--.tabs-content-->
           </div><!--.form-wrap-->    
     </BODY>
