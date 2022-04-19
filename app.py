@@ -14,6 +14,8 @@ app.config['MYSQL_DB'] = 'PROJECT'
 
 mysql = MySQL(app)
 
+d = ()
+
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
     if(request.method == 'POST'):
@@ -210,6 +212,36 @@ def sellerSignup():
     mysql.connection.commit()
     cur.close()
     return render_template('login.html')
+
+@app.route("/homepage/<user_id>")
+def homepage(user_id):
+    cur = mysql.connection.cursor()
+    s = "select * from customer where customer_ID = " + str(user_id)
+    cur.execute(s)
+    d = cur.fetchall()[0]
+
+    s = "select * from categories";
+    cur.execute(s)
+    c = cur.fetchall()
+
+    return render_template('homepage.html', details = d, categories = c)
+
+@app.route("/myprofile/<user_id>")
+def myprofile(user_id):
+    cur = mysql.connection.cursor()
+    s = "select * from customer where customer_ID = " + str(user_id)
+    cur.execute(s)
+    d = cur.fetchall()[0]
+
+    s = "select username from customer_logindetails where customerId = " + str(user_id)
+    cur.execute(s)
+    u = cur.fetchall()[0][0]
+
+    s = "select * from categories";
+    cur.execute(s)
+    c = cur.fetchall()
+
+    return render_template("myprofile.html", details = d, username = u, categories = c)
 
 if(__name__ == "__main__"):
     app.run(debug = True)

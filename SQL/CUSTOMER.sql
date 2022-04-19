@@ -1,4 +1,3 @@
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (1, 'Vida Potten', 'vpotten0@dmoz.org', '838-117-5391', '2021-09-12', '44 Menomonie Pass');
 insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (2,  'Florie Giordano', 'fgiordano1@elegantthemes.com', '637-452-1702', '2021-05-11', '6182 Morningstar Way');
 insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (3,  'Gilly Sumption', 'gsumption2@bbc.co.uk', '545-132-2618', '2022-02-24', '3 Moulton Road');
 insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (4,  'Godfry Peppett', 'gpeppett3@bing.com', '295-885-6109', '2021-08-06', '31 Montana Parkway');

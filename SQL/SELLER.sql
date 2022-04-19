@@ -8,3 +8,4 @@ insert into Seller (Seller_ID, Name, Location, Contact_No ,Email_ID) values (7, 
 insert into Seller (Seller_ID, Name, Location, Contact_No ,Email_ID) values (8,  'Christan Leech'      , '453 Vidon Junction'     , '120-370-7912', 'cleechh@desdev.cn'               );
 insert into Seller (Seller_ID, Name, Location, Contact_No ,Email_ID) values (9,  'Nadine Janisson'     , '32877 Walton Place'     , '475-486-7497', 'njanissoni@odnoklassniki.ru'     );
 insert into Seller (Seller_ID, Name, Location, Contact_No ,Email_ID) values (10,  'Brinn Hurworth'      , '9 Dorton Hill'          , '484-894-0621', 'bhurworthj@seesaa.net'           );
+
