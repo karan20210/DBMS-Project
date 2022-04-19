@@ -1,4 +1,4 @@
-insert into PRODUCTS (Product_ID, Category_ID, Name, Price, Quantity_Available, Seller_ID, Days_to_Arrive, Description, ImageSource) values (1, 1, 'External Supplier', 6721.89, 37, 1, 3, '',LOAD_FILE());
+insert into PRODUCTS (Product_ID, Category_ID, Name, Price, Quantity_Available, Seller_ID, Days_to_Arrive, Description, ImageSource) values (1, 1, 'External Supplier', 6721.89, 37, 1, 3, '','../');
 insert into PRODUCTS (Product_ID, Category_ID, Name, Price, Quantity_Available, Seller_ID, Days_to_Arrive, Description, ImageSource) values (2, 6, 'Bread - Corn Muffaletta', 6125.82, 65, 2, 8, '',LOAD_FILE());
 insert into PRODUCTS (Product_ID, Category_ID, Name, Price, Quantity_Available, Seller_ID, Days_to_Arrive, Description, ImageSource) values (3, 10, 'Chicken Breast Halal', 6999.88, 93, 5, 10, '',LOAD_FILE());
 insert into PRODUCTS (Product_ID, Category_ID, Name, Price, Quantity_Available, Seller_ID, Days_to_Arrive, Description, ImageSource) values (4, 9, 'Dc Hikiage Hira Huba', 3786.98, 91, 3, 1, '',LOAD_FILE());
