@@ -220,7 +220,11 @@ def homepage(user_id):
     cur.execute(s)
     d = cur.fetchall()[0]
 
-    return render_template('homepage.html', details = d)
+    s = "select * from categories";
+    cur.execute(s)
+    c = cur.fetchall()
+
+    return render_template('homepage.html', details = d, categories = c)
 
 @app.route("/myprofile/<user_id>")
 def myprofile(user_id):
@@ -233,7 +237,11 @@ def myprofile(user_id):
     cur.execute(s)
     u = cur.fetchall()[0][0]
 
-    return render_template("myprofile.html", details = d, username = u)
+    s = "select * from categories";
+    cur.execute(s)
+    c = cur.fetchall()
+
+    return render_template("myprofile.html", details = d, username = u, categories = c)
 
 if(__name__ == "__main__"):
     app.run(debug = True)
