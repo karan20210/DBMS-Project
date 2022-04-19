@@ -1,0 +1,10 @@
+insert into Seller_LoginDetails (Username,Password,Seller_ID) values ('glogiea'     , 'IpResrpK9Uy' ,1);
+insert into Seller_LoginDetails (Username,Password,Seller_ID) values ('dgirogettib' , 'tehJOdYWlc8' ,2);
+insert into Seller_LoginDetails (Username,Password,Seller_ID) values ('cjenningsc'  , 'OzAXmbL3'    ,3);
+insert into Seller_LoginDetails (Username,Password,Seller_ID) values ('dborthed'    , 'UuS3CbRaTb'  ,4);
+insert into Seller_LoginDetails (Username,Password,Seller_ID) values ('jbrewsee'    , 'oAUbY6ET'    ,5);
+insert into Seller_LoginDetails (Username,Password,Seller_ID) values ('tquartleyf'  , 'r9g5Nrtw'    ,6);
+insert into Seller_LoginDetails (Username,Password,Seller_ID) values ('hgoodrightg' , 'atYZqT46Ca'  ,7);
+insert into Seller_LoginDetails (Username,Password,Seller_ID) values ('cleechh'     , 'avrfki3'     ,8);
+insert into Seller_LoginDetails (Username,Password,Seller_ID) values ('njanissoni'  , 'szu2ESGmo'   ,9);
+insert into Seller_LoginDetails (Username,Password,Seller_ID) values ('bhurworthj'  , 'o1rKw5m'     ,10);

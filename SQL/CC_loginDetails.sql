@@ -1,0 +1,10 @@
+insert into CC_LoginDetails (Username,Password,CCID) values ('lokenfoldk'     , 'W3mRYcFEjkzK'    ,1);
+insert into CC_LoginDetails (Username,Password,CCID) values ('hkinchingtonl'  , 'MBwyIZAW'        ,2);
+insert into CC_LoginDetails (Username,Password,CCID) values ('rbrayfieldm'    , '2PKEtZHxtRM'     ,3);
+insert into CC_LoginDetails (Username,Password,CCID) values ('cbrambleyn'     , 'lArcAre0r'       ,4);
+insert into CC_LoginDetails (Username,Password,CCID) values ('dgoldsbyo', 'fcvCyu8Bf'             ,5);
+insert into CC_LoginDetails (Username,Password,CCID) values ('apinkettp', 'gQjWn6AwlgH'           ,6);
+insert into CC_LoginDetails (Username,Password,CCID) values ('lwasbroughq', 'NQ9r9Ml'             ,7);
+insert into CC_LoginDetails (Username,Password,CCID) values ('mlavaller', 'XsoHBsn4Zbm'           ,8);
+insert into CC_LoginDetails (Username,Password,CCID) values ('jmckeowns', '067at6'                ,9);
+insert into CC_LoginDetails (Username,Password,CCID) values ('rleethemt', 'k4gJMAm'               ,10);

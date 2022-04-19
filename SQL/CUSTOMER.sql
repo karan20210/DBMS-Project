@@ -1,53 +1,44 @@
 insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (1, 'Vida Potten', 'vpotten0@dmoz.org', '838-117-5391', '2021-09-12', '44 Menomonie Pass');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (2, 'fgiordano1', 'roQVVB8pgj', 'Florie Giordano', 'fgiordano1@elegantthemes.com', '637-452-1702', '2021-05-11', '6182 Morningstar Way');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (3, 'gsumption2', '5AgszrP2D40', 'Gilly Sumption', 'gsumption2@bbc.co.uk', '545-132-2618', '2022-02-24', '3 Moulton Road');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (4, 'gpeppett3', 'NHs8Ug6cMi0', 'Godfry Peppett', 'gpeppett3@bing.com', '295-885-6109', '2021-08-06', '31 Montana Parkway');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (5, 'jribbens4', 'WMfXviF8ZV0k', 'Josh Ribbens', 'jribbens4@ftc.gov', '696-534-6271', '2021-10-19', '8307 Columbus Avenue');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (6, 'rcarmo5', 'od5HiW', 'Roi Carmo', 'rcarmo5@wunderground.com', '464-359-6503', '2021-04-03', '89639 Iowa Road');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (7, 'rlutas6', 'TAgHrY4y7', 'Red Lutas', 'rlutas6@ihg.com', '138-570-4639', '2022-01-11', '8626 Fairfield Pass');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (8, 'dbluschke7', 'YcxhwRZ9', 'Delcina Bluschke', 'dbluschke7@istockphoto.com', '605-933-8785', '2021-08-22', '2435 Fuller Parkway');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (9, 'ysweynson8', '5TIJFaOe', 'Yancy Sweynson', 'ysweynson8@hexun.com', '863-260-8965', '2021-08-01', '32 Karstens Point');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (10, 'adimic9', 'MZTfXOLWU', 'Alberta Dimic', 'adimic9@macromedia.com', '198-883-7075', '2021-04-16', '6 Forest Place');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (11, 'glogiea', 'IpResrpK9Uy', 'Gerhardt Logie', 'glogiea@globo.com', '439-650-0863', '2022-01-20', '1136 East Point');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (12, 'dgirogettib', 'tehJOdYWlc8', 'Diandra Girogetti', 'dgirogettib@constantcontact.com', '306-219-1941', '2021-09-02', '33 Linden Pass');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (13, 'cjenningsc', 'OzAXmbL3', 'Concordia Jennings', 'cjenningsc@timesonline.co.uk', '500-607-0548', '2021-09-05', '4 Mayfield Parkway');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (14, 'dborthed', 'UuS3CbRaTb', 'Darice Borthe', 'dborthed@sakura.ne.jp', '622-483-7736', '2021-03-20', '131 Vermont Hill');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (15, 'jbrewsee', 'oAUbY6ET', 'Jarrett Brewse', 'jbrewsee@eepurl.com', '376-687-9181', '2022-01-06', '61 Kennedy Center');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (16, 'tquartleyf', 'r9g5Nrtw', 'Tanya Quartley', 'tquartleyf@guardian.co.uk', '816-206-2782', '2021-09-06', '29318 Kingsford Hill');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (17, 'hgoodrightg', 'atYZqT46Ca', 'Hank Goodright', 'hgoodrightg@dot.gov', '963-350-6857', '2022-01-31', '212 Burning Wood Pass');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (18, 'cleechh', 'avrfki3', 'Christan Leech', 'cleechh@desdev.cn', '120-370-7912', '2021-04-01', '453 Vidon Junction');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (19, 'njanissoni', 'szu2ESGmo', 'Nadine Janisson', 'njanissoni@odnoklassniki.ru', '475-486-7497', '2021-05-14', '32877 Walton Place');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (20, 'bhurworthj', 'o1rKw5m', 'Brinn Hurworth', 'bhurworthj@seesaa.net', '484-894-0621', '2021-07-11', '9 Dorton Hill');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (21, 'lokenfoldk', 'W3mRYcFEjkzK', 'Lucilia Okenfold', 'lokenfoldk@cnbc.com', '118-859-6762', '2021-09-03', '20228 Loeprich Point');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (22, 'hkinchingtonl', 'MBwyIZAW', 'Hermina Kinchington', 'hkinchingtonl@google.nl', '822-298-9836', '2021-03-03', '04574 Northland Park');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (23, 'rbrayfieldm', '2PKEtZHxtRM', 'Ragnar Brayfield', 'rbrayfieldm@networkadvertising.org', '989-622-4535', '2021-04-08', '2 Dorton Park');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (24, 'cbrambleyn', 'lArcAre0r', 'Cami Brambley', 'cbrambleyn@shinystat.com', '856-866-9487', '2021-08-31', '07015 Caliangt Circle');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (25, 'dgoldsbyo', 'fcvCyu8Bf', 'Di Goldsby', 'dgoldsbyo@gmpg.org', '969-958-5842', '2021-09-14', '145 Homewood Pass');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (26, 'apinkettp', 'gQjWn6AwlgH', 'Adlai Pinkett', 'apinkettp@unblog.fr', '468-350-9111', '2022-01-30', '3178 Chive Pass');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (27, 'lwasbroughq', 'NQ9r9Ml', 'Letisha Wasbrough', 'lwasbroughq@aboutads.info', '370-534-3678', '2021-07-08', '18 Donald Lane');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (28, 'mlavaller', 'XsoHBsn4Zbm', 'Maurene Lavalle', 'mlavaller@usgs.gov', '577-688-1906', '2021-06-22', '93956 Fair Oaks Point');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (29, 'jmckeowns', '067at6', 'Jennifer McKeown', 'jmckeowns@yelp.com', '174-163-7741', '2021-08-23', '810 Westridge Pass');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (30, 'rleethemt', 'k4gJMAm', 'Rosabelle Leethem', 'rleethemt@pen.io', '833-895-5747', '2022-01-04', '2740 Randy Terrace');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (31, 'fcroppu', '9TKArwtl', 'Faye Cropp', 'fcroppu@craigslist.org', '667-802-6236', '2021-06-06', '07 Corry Road');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (32, 'ledworthiev', 'F3mbpy', 'Laurene Edworthie', 'ledworthiev@1und1.de', '711-710-6135', '2021-10-23', '193 Mallard Park');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (33, 'apoulneyw', 'SQzGaAEM', 'Auberta Poulney', 'apoulneyw@state.tx.us', '974-185-0770', '2021-08-06', '28 Lakeland Hill');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (34, 'rmoiserx', 'HWhWNkLv0uI', 'Ramsay Moiser', 'rmoiserx@google.com.hk', '218-766-9224', '2021-06-29', '1168 Lindbergh Place');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (35, 'mflinny', 'X1Ij3o', 'Marcelle Flinn', 'mflinny@jugem.jp', '149-283-1108', '2021-06-22', '9 Porter Parkway');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (36, 'ppaxfordez', '92Ygaha57', 'Palmer Paxforde', 'ppaxfordez@fc2.com', '155-843-5360', '2021-11-11', '0 David Center');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (37, 'sbazely10', 'NfXqHwBC', 'Sig Bazely', 'sbazely10@acquirethisname.com', '509-203-2129', '2021-10-25', '9 Schlimgen Way');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (38, 'cbremmell11', 'qhbScG38x', 'Caleb Bremmell', 'cbremmell11@eventbrite.com', '139-502-5783', '2022-01-04', '74985 Manley Place');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (39, 'jmoger12', 'bjUKNlxLs', 'Jody Moger', 'jmoger12@dedecms.com', '643-165-7876', '2021-03-17', '72863 Summer Ridge Lane');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (40, 'jangrove13', 'rK7yMH8HUC', 'Jennine Angrove', 'jangrove13@wufoo.com', '695-532-3524', '2021-07-02', '16 Goodland Parkway');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (41, 'nwolseley14', 'TN2OdIDRDYI', 'Nedi Wolseley', 'nwolseley14@dot.gov', '809-116-4338', '2021-05-12', '266 Kipling Pass');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (42, 'cdenyukin15', 'aveGi6MArTXK', 'Cynthea Denyukin', 'cdenyukin15@mapquest.com', '439-758-4348', '2021-03-19', '0481 Hanover Way');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (43, 'rpellissier16', 'BoElS04tU', 'Robb Pellissier', 'rpellissier16@cbsnews.com', '829-481-8516', '2022-02-03', '20 Clove Hill');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (44, 'vmolloy17', '83pZaks', 'Valerie Molloy', 'vmolloy17@economist.com', '588-925-4971', '2021-08-31', '4014 Golf Course Court');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (45, 'so18', 'p151xwJ', 'Stanleigh O'' Gara', 'so18@twitter.com', '197-339-6219', '2021-10-13', '110 Goodland Way');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (46, 'hcarbin19', 'ZaQ938Wf', 'Heriberto Carbin', 'hcarbin19@nba.com', '659-770-9236', '2021-09-15', '67951 Macpherson Avenue');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (47, 'vbeckhurst1a', 'Ex9tXmTBGI8M', 'Vite Beckhurst', 'vbeckhurst1a@xinhuanet.com', '317-705-8539', '2021-06-21', '155 Burrows Park');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (48, 'zmatfield1b', 'BeFSZYpUN2', 'Zena Matfield', 'zmatfield1b@census.gov', '491-587-5673', '2021-06-21', '596 Dennis Court');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (49, 'wkembery1c', 'bfuWP8lhB', 'Whitaker Kembery', 'wkembery1c@smugmug.com', '150-267-2238', '2021-09-14', '42962 Continental Terrace');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (50, 'omattholie1d', 'NW7hZn1iuD', 'Olenolin Mattholie', 'omattholie1d@bigcartel.com', '991-922-3723', '2021-10-13', '4768 Redwing Trail');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (2,  'Florie Giordano', 'fgiordano1@elegantthemes.com', '637-452-1702', '2021-05-11', '6182 Morningstar Way');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (3,  'Gilly Sumption', 'gsumption2@bbc.co.uk', '545-132-2618', '2022-02-24', '3 Moulton Road');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (4,  'Godfry Peppett', 'gpeppett3@bing.com', '295-885-6109', '2021-08-06', '31 Montana Parkway');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (5,  'Josh Ribbens', 'jribbens4@ftc.gov', '696-534-6271', '2021-10-19', '8307 Columbus Avenue');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (6,  'Roi Carmo', 'rcarmo5@wunderground.com', '464-359-6503', '2021-04-03', '89639 Iowa Road');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (7,  'Red Lutas', 'rlutas6@ihg.com', '138-570-4639', '2022-01-11', '8626 Fairfield Pass');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (8,  'Delcina Bluschke', 'dbluschke7@istockphoto.com', '605-933-8785', '2021-08-22', '2435 Fuller Parkway');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (9,  'Yancy Sweynson', 'ysweynson8@hexun.com', '863-260-8965', '2021-08-01', '32 Karstens Point');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (10,  'Alberta Dimic', 'adimic9@macromedia.com', '198-883-7075', '2021-04-16', '6 Forest Place');
+
+
+
+
+
+
+
+
+
+
+
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (31, 'fcroppu', '9TKArwtl',         'Faye Cropp'          ,  'fcroppu@craigslist.org',         '667-802-6236', '2021-06-06', '07 Corry Road');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (32, 'ledworthiev', 'F3mbpy',       'Laurene Edworthie'   , 'ledworthiev@1und1.de',            '711-710-6135', '2021-10-23', '193 Mallard Park');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (33, 'apoulneyw', 'SQzGaAEM',       'Auberta Poulney'     , 'apoulneyw@state.tx.us',           '974-185-0770', '2021-08-06', '28 Lakeland Hill');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (34, 'rmoiserx', 'HWhWNkLv0uI',     'Ramsay Moiser'       , 'rmoiserx@google.com.hk',          '218-766-9224', '2021-06-29', '1168 Lindbergh Place');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (35, 'mflinny', 'X1Ij3o',           'Marcelle Flinn'      , 'mflinny@jugem.jp',                '149-283-1108', '2021-06-22', '9 Porter Parkway');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (36, 'ppaxfordez', '92Ygaha57',     'Palmer Paxforde'     , 'ppaxfordez@fc2.com',              '155-843-5360', '2021-11-11', '0 David Center');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (37, 'sbazely10', 'NfXqHwBC',       'Sig Bazely'          , 'sbazely10@acquirethisname.com',    '509-203-2129', '2021-10-25', '9 Schlimgen Way');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (38, 'cbremmell11', 'qhbScG38x',    'Caleb Bremmell'      , 'cbremmell11@eventbrite.com',     '139-502-5783', '2022-01-04', '74985 Manley Place');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (39, 'jmoger12', 'bjUKNlxLs',       'Jody Moger'          , 'jmoger12@dedecms.com',           '643-165-7876', '2021-03-17', '72863 Summer Ridge Lane');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (40, 'jangrove13', 'rK7yMH8HUC',    'Jennine Angrove'     , 'jangrove13@wufoo.com',           '695-532-3524', '2021-07-02', '16 Goodland Parkway');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (41, 'nwolseley14', 'TN2OdIDRDYI',  'Nedi Wolseley'       , 'nwolseley14@dot.gov',            '809-116-4338', '2021-05-12', '266 Kipling Pass');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (42, 'cdenyukin15', 'aveGi6MArTXK',   'Cynthea Denyukin'  , 'cdenyukin15@mapquest.com',       '439-758-4348', '2021-03-19', '0481 Hanover Way');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (43, 'rpellissier16', 'BoElS04tU',    'Robb Pellissier'   , 'rpellissier16@cbsnews.com',       '829-481-8516', '2022-02-03', '20 Clove Hill');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (44, 'vmolloy17', '83pZaks',          'Valerie Molloy'    , 'vmolloy17@economist.com',        '588-925-4971', '2021-08-31', '4014 Golf Course Court');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (45, 'so18', 'p151xwJ',               'Stanleigh O'' Gara', 'so18@twitter.com',               '197-339-6219', '2021-10-13', '110 Goodland Way');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (46, 'hcarbin19', 'ZaQ938Wf',         'Heriberto Carbin'  , 'hcarbin19@nba.com',              '659-770-9236', '2021-09-15', '67951 Macpherson Avenue');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (47, 'vbeckhurst1a', 'Ex9tXmTBGI8M',  'Vite Beckhurst'    , 'vbeckhurst1a@xinhuanet.com',      '317-705-8539', '2021-06-21', '155 Burrows Park');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (48, 'zmatfield1b', 'BeFSZYpUN2',     'Zena Matfield'     , 'zmatfield1b@census.gov',         '491-587-5673', '2021-06-21', '596 Dennis Court');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (49, 'wkembery1c', 'bfuWP8lhB',       'Whitaker Kembery'  , 'wkembery1c@smugmug.com',         '150-267-2238', '2021-09-14', '42962 Continental Terrace');
+insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (50, 'omattholie1d', 'NW7hZn1iuD',    'Olenolin Mattholie', 'omattholie1d@bigcartel.com',     '991-922-3723', '2021-10-13', '4768 Redwing Trail');
 insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (51, 'bdalgetty1e', 'UxI9BIWg', 'Blake Dalgetty', 'bdalgetty1e@goo.gl', '912-427-4018', '2021-10-09', '4 Hoard Plaza');
 insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (52, 'mgirkins1f', 'm1bexW3O7l4', 'Marijo Girkins', 'mgirkins1f@gmpg.org', '581-372-0603', '2022-01-20', '29 Ryan Point');
 insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (53, 'opedrick1g', 'uhAQAz', 'Odelle Pedrick', 'opedrick1g@alibaba.com', '259-342-1456', '2021-05-10', '5867 Lawn Junction');
