@@ -1,4 +1,5 @@
 from datetime import datetime
+import random
 from flask import Flask, redirect, render_template, request
 from flask_mysqldb import MySQL
 import yaml
@@ -9,7 +10,7 @@ app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root' 
-app.config['MYSQL_PASSWORD'] = 'Khwai0902'
+app.config['MYSQL_PASSWORD'] = 'karanb1809'
 app.config['MYSQL_DB'] = 'PROJECT'
 
 mysql = MySQL(app)
@@ -46,7 +47,20 @@ def customerlogin():
             cur.execute(s)
             d = cur.fetchall()[0]
 
-            return render_template('homepage.html', details = d)
+            s = "select * from products"
+            cur.execute(s)
+            p = cur.fetchall() 
+            ps = []  
+
+            s = "select * from categories";
+            cur.execute(s)
+            c = cur.fetchall()
+
+            for i in range(3):
+                no = random.randint(0, 9)
+                ps.append(p[no])                
+
+            return render_template('homepage.html', details = d, categories = c, products = ps)
         else:
             print("Failure")
     mysql.connection.commit()
@@ -224,7 +238,16 @@ def homepage(user_id):
     cur.execute(s)
     c = cur.fetchall()
 
-    return render_template('homepage.html', details = d, categories = c)
+    s = "select * from products"
+    cur.execute(s)
+    p = cur.fetchall()
+    ps = []
+    
+    for i in range(3):
+        no = random.randint(0, 9)
+        ps.append(p[no])   
+
+    return render_template('homepage.html', details = d, categories = c, products = ps)
 
 @app.route("/myprofile/<user_id>")
 def myprofile(user_id):
