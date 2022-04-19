@@ -9,10 +9,12 @@ app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root' 
-app.config['MYSQL_PASSWORD'] = 'Khwai0902'
+app.config['MYSQL_PASSWORD'] = 'karanb1809'
 app.config['MYSQL_DB'] = 'PROJECT'
 
 mysql = MySQL(app)
+
+d = ()
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -210,6 +212,28 @@ def sellerSignup():
     mysql.connection.commit()
     cur.close()
     return render_template('login.html')
+
+@app.route("/homepage/<user_id>")
+def homepage(user_id):
+    cur = mysql.connection.cursor()
+    s = "select * from customer where customer_ID = " + str(user_id)
+    cur.execute(s)
+    d = cur.fetchall()[0]
+
+    return render_template('homepage.html', details = d)
+
+@app.route("/myprofile/<user_id>")
+def myprofile(user_id):
+    cur = mysql.connection.cursor()
+    s = "select * from customer where customer_ID = " + str(user_id)
+    cur.execute(s)
+    d = cur.fetchall()[0]
+
+    s = "select username from customer_logindetails where customerId = " + str(user_id)
+    cur.execute(s)
+    u = cur.fetchall()[0][0]
+
+    return render_template("myprofile.html", details = d, username = u)
 
 if(__name__ == "__main__"):
     app.run(debug = True)
