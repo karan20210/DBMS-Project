@@ -1,6 +1,6 @@
 CREATE DATABASE PROJECT;
 use PROJECT;
-
+ 
 create table `Department`(
   `Department_ID` int check(Department_ID>0), 
   `Department_Name` varchar(40) not null unique, 
@@ -47,7 +47,7 @@ CREATE TABLE `PRODUCTS` (
   `Seller_ID` Integer NOT NULL,
   `Days_to_Arrive` Integer NOT NULL check(Days_to_Arrive>0),
   `Description` VARCHAR(500) NOT NULL,
-  `ImageSource` BLOB NOT NULL,
+  `ImageSource` VARCHAR(500) NOT NULL,
   PRIMARY KEY (`Product_ID`),
   FOREIGN KEY(Category_ID) REFERENCES CATEGORIES(Category_ID), 
 FOREIGN KEY(Seller_ID) REFERENCES SELLER(Seller_ID)

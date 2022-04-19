@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root' 
-app.config['MYSQL_PASSWORD'] = 'Khwai0902'
+app.config['MYSQL_PASSWORD'] = 'karanb1809'
 app.config['MYSQL_DB'] = 'PROJECT'
 
 mysql = MySQL(app)
@@ -46,7 +46,15 @@ def customerlogin():
             cur.execute(s)
             d = cur.fetchall()[0]
 
-            return render_template('homepage.html', details = d)
+            s = "select * from products"
+            cur.execute(s)
+            p = cur.fetchall()        
+
+            s = "select * from categories";
+            cur.execute(s)
+            c = cur.fetchall()
+
+            return render_template('homepage.html', details = d, categories = c, products = p)
         else:
             print("Failure")
     mysql.connection.commit()
@@ -224,7 +232,12 @@ def homepage(user_id):
     cur.execute(s)
     c = cur.fetchall()
 
-    return render_template('homepage.html', details = d, categories = c)
+    s = "select * from products"
+    cur.execute(s)
+    p = cur.fetchall()
+    print(p[0][8])
+
+    return render_template('homepage.html', details = d, categories = c, products = p)
 
 @app.route("/myprofile/<user_id>")
 def myprofile(user_id):
