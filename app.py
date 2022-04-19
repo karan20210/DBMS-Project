@@ -1,4 +1,5 @@
 from datetime import datetime
+import random
 from flask import Flask, redirect, render_template, request
 from flask_mysqldb import MySQL
 import yaml
@@ -48,13 +49,18 @@ def customerlogin():
 
             s = "select * from products"
             cur.execute(s)
-            p = cur.fetchall()        
+            p = cur.fetchall() 
+            ps = []  
 
             s = "select * from categories";
             cur.execute(s)
             c = cur.fetchall()
 
-            return render_template('homepage.html', details = d, categories = c, products = p)
+            for i in range(3):
+                no = random.randint(0, 9)
+                ps.append(p[no])                
+
+            return render_template('homepage.html', details = d, categories = c, products = ps)
         else:
             print("Failure")
     mysql.connection.commit()
@@ -235,9 +241,13 @@ def homepage(user_id):
     s = "select * from products"
     cur.execute(s)
     p = cur.fetchall()
-    print(p[0][8])
+    ps = []
+    
+    for i in range(3):
+        no = random.randint(0, 9)
+        ps.append(p[no])   
 
-    return render_template('homepage.html', details = d, categories = c, products = p)
+    return render_template('homepage.html', details = d, categories = c, products = ps)
 
 @app.route("/myprofile/<user_id>")
 def myprofile(user_id):
