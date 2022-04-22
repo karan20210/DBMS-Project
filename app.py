@@ -337,7 +337,11 @@ def cart(user_id):
         total += final_price[i]
         
     total = round(total, 2)
-    return render_template("cart.html", details = d, products = products_ordered, q = quantity_ordered, p = final_price, t = total)
+
+    s = "select * from categories";
+    cur.execute(s)
+    c = cur.fetchall()
+    return render_template("cart.html", details = d, products = products_ordered, q = quantity_ordered, p = final_price, t = total, categories = c)
 
 if(__name__ == "__main__"):
     app.run(debug = True)
