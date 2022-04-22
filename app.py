@@ -3,10 +3,13 @@ import random
 from flask import Flask, redirect, render_template, request
 from flask_mysqldb import MySQL
 import yaml
+import os
 
 app = Flask(__name__)
 
-# db = yaml.safe_load(open('db.yaml'))
+UPLOAD_FOLDER = 'static/products'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root' 
@@ -42,27 +45,8 @@ def customerlogin():
 
     for i in records:
         if username == i[0] and pwd == i[1]:
-            # Getting details of the logged in customer to send to HTML
-            s = "select * from customer where customer_ID = " + str(i[2])
-            cur.execute(s)
-            d = cur.fetchall()[0]
-
-            s = "select * from products"
-            cur.execute(s)
-            p = cur.fetchall() 
-            ps = []  
-
-            s = "select * from categories";
-            cur.execute(s)
-            c = cur.fetchall()
-
-            for i in range(3):
-                no = random.randint(0, 9)
-                ps.append(p[no])                
-
-            return render_template('homepage.html', details = d, categories = c, products = ps)
-        else:
-            print("Failure")
+            l = "/homepage/" + str(i[2])
+            return redirect(l)
     mysql.connection.commit()
     cur.close()
 
@@ -83,14 +67,9 @@ def sellerlogin():
 
     for i in records:
         if username == i[0] and pwd == i[1]:
-            print("Success")
-            break
-        else:
-            print("Failure")
-    mysql.connection.commit()
-    cur.close()
-
-    return render_template('login.html')
+            l = "/sellerhomepage/" + str(i[2])
+            return redirect(l)
+    
 
 @app.route("/managerlogin", methods = ['POST'])
 def managerlogin():
@@ -242,12 +221,68 @@ def homepage(user_id):
     cur.execute(s)
     p = cur.fetchall()
     ps = []
-    
+    print(len(p))
     for i in range(3):
-        no = random.randint(0, 9)
+        no = random.randint(0, len(p) - 1)
         ps.append(p[no])   
 
     return render_template('homepage.html', details = d, categories = c, products = ps)
+
+@app.route("/sellerhomepage/<seller_id>")
+def sellerhomepage(seller_id):
+    cur = mysql.connection.cursor()
+    s = "select * from seller where seller_id = " + str(seller_id)
+    cur.execute(s)
+    d = cur.fetchall()[0]
+
+    s = "select * from products where seller_id = " + str(seller_id)
+    cur.execute(s)
+    p = cur.fetchall()
+
+    mysql.connection.commit()
+    cur.close()
+
+    return render_template('sellerhomepage.html', details = d, products = p)
+
+@app.route("/addproducts/<seller_id>")
+def addProductsPage(seller_id):
+    return render_template("addproduct.html", id = seller_id)
+
+@app.route("/newproduct/<seller_id>", methods = ['POST'])
+def newProduct(seller_id):
+    name = request.form['product_name']
+    category = request.form['category']
+    price = request.form['price']
+    quantity = request.form['quantity']
+    desc = request.form['description']
+    days = request.form['days_to_arrive']
+    # print(request.files)
+
+    cur = mysql.connection.cursor()
+    s = "select * from Products"
+    cur.execute(s)
+    p = cur.fetchall()
+    product_id = len(p) + 1
+
+    s = "select category_id from categories where category_name = '" + category + "'"
+    cur.execute(s)
+    p = cur.fetchall()
+    category_id = p[0][0]
+
+    file = request.files['product_image']
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    file.save(os.path.join(basedir, app.config['UPLOAD_FOLDER'], file.filename))
+
+    img_path = "../static/products/" + str(file.filename)
+    s = "insert into PRODUCTS (Product_ID, Category_ID, Name, Price, Quantity_Available, Seller_ID, Days_to_Arrive, Description, ImageSource) values (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
+    v = (int(product_id), int(category_id), name, float(price), int(quantity), int(seller_id), int(days), desc, img_path)
+    cur.execute(s, v)
+    mysql.connection.commit()
+    cur.close()
+
+    l = "/sellerhomepage/" + seller_id
+    return redirect(l)
+
 
 @app.route("/myprofile/<user_id>")
 def myprofile(user_id):
@@ -265,6 +300,44 @@ def myprofile(user_id):
     c = cur.fetchall()
 
     return render_template("myprofile.html", details = d, username = u, categories = c)
+
+@app.route("/cart/<user_id>")
+def cart(user_id):
+    cur = mysql.connection.cursor()
+    s = "select * from customer where customer_ID = " + str(user_id)
+    cur.execute(s)
+    d = cur.fetchall()[0]
+
+    s = "select * from cart where ccustomerid = " + str(user_id) + " and cart_id in (select max(cart_id) from cart)"
+    cur.execute(s)
+    c = cur.fetchall()
+    # print(c)
+
+    products_ordered_id = []
+    for i in c:
+        products_ordered_id.append(i[2])
+    
+    products_ordered = []
+    for i in products_ordered_id:
+        s = "select * from products where product_id = " + str(i)
+        cur.execute(s)
+        products_ordered.append(cur.fetchall())
+
+    # print(products_ordered[0])
+
+    quantity_ordered = []
+    for i in c:
+        quantity_ordered.append(i[3])
+    # print(quantity_ordered)
+
+    final_price = []
+    total = 0
+    for i in range(len(c)):
+        final_price.append(quantity_ordered[i] * products_ordered[i][0][3])
+        total += final_price[i]
+        
+    total = round(total, 2)
+    return render_template("cart.html", details = d, products = products_ordered, q = quantity_ordered, p = final_price, t = total)
 
 if(__name__ == "__main__"):
     app.run(debug = True)

@@ -18,7 +18,7 @@
         
             <div class="tabs-content">
               <div id="-tab-content" class="active">
-                <form class="add-product-form" action="/addproduct" method="post">
+                <form class="add-product-form" action="/newproduct/{{id}}" method="post" enctype = "multipart/form-data">
                   <input type="text" class="input" id="product_name" autocomplete="off" placeholder="Product name" name = "product_name">
                   
                 <select id="category" name="category" placeholder>
@@ -42,7 +42,7 @@
 
                   <input type="number" min = 0 class="input" id="days_to_arrive" autocomplete="off" placeholder="Days to Arrive" name = "days_to_arrive">
                   
-                  <input type="file" class="input" name="product_image" accept="image/*">
+                  <input type="file" class="input" name="product_image">
 
                   <input type="submit" class="button" value="Submit">
                 </form><!--.customer-form-->
