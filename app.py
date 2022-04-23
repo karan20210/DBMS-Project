@@ -1,5 +1,6 @@
 from datetime import datetime
 import random
+from unicodedata import category
 from flask import Flask, redirect, render_template, request
 from flask_mysqldb import MySQL
 import yaml
@@ -13,7 +14,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root' 
-app.config['MYSQL_PASSWORD'] = 'Khwai0902'
+app.config['MYSQL_PASSWORD'] = 'karanb1809'
 app.config['MYSQL_DB'] = 'PROJECT'
 
 mysql = MySQL(app)
@@ -209,9 +210,7 @@ def sellerSignup():
 @app.route("/homepage/<user_id>")
 def homepage(user_id):
     cur = mysql.connection.cursor()
-    s = "select * from customer where customer_ID = " + str(user_id)
-    cur.execute(s)
-    d = cur.fetchall()[0]
+    d = getDetails(user_id)
 
     s = "select * from categories";
     cur.execute(s)
@@ -283,13 +282,10 @@ def newProduct(seller_id):
     l = "/sellerhomepage/" + seller_id
     return redirect(l)
 
-
 @app.route("/myprofile/<user_id>")
 def myprofile(user_id):
     cur = mysql.connection.cursor()
-    s = "select * from customer where customer_ID = " + str(user_id)
-    cur.execute(s)
-    d = cur.fetchall()[0]
+    d = getDetails(user_id)
 
     s = "select username from customer_logindetails where customerId = " + str(user_id)
     cur.execute(s)
@@ -343,5 +339,51 @@ def cart(user_id):
     c = cur.fetchall()
     return render_template("cart.html", details = d, products = products_ordered, q = quantity_ordered, p = final_price, t = total, categories = c)
 
+@app.route("/<user_id>/products/<product_id>")
+def productPage(user_id, product_id):
+    d = getDetails(user_id)
+
+    p = getProductDetails(product_id)
+
+    c = getCategoryFromProduct(product_id)
+
+    r = getReviewsOfProduct(product_id)
+    total_stars = 0
+    for i in r:
+        total_stars += i[2]
+    avg_stars = total_stars/len(r)
+
+    review_users = []
+    for i in r:
+        review_users.append(getDetails(i[3]))
+    print(review_users)
+    return render_template("product.html", details = d, product = p, category = c, reviews = r, average = avg_stars, users = review_users)
+
+
+# Helper functions
+def getDetails(user_id):
+    cur = mysql.connection.cursor()
+    s = "select * from customer where customer_id = " + str(user_id)
+    cur.execute(s)
+    return cur.fetchall()[0]
+
+def getProductDetails(product_id):
+    cur = mysql.connection.cursor()
+    s = "select * from products where product_id = " + str(product_id)
+    cur.execute(s)
+    return cur.fetchall()[0]
+
+def getCategoryFromProduct(product_id):
+    cur = mysql.connection.cursor()
+    s = "select * from categories where category_id in (select category_id from products where product_id = " + str(product_id) + ")"
+    cur.execute(s)
+    return cur.fetchall()[0]
+
+def getReviewsOfProduct(product_id):
+    cur = mysql.connection.cursor()
+    s = "select * from reviews where product_id = " + str(product_id)
+    cur.execute(s)
+    return cur.fetchall()
+    
 if(__name__ == "__main__"):
     app.run(debug = True)
