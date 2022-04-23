@@ -12,7 +12,19 @@
         <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #292fa3;">
             <div class="container">
               <a class="navbar-brand" href="#">Welcome, {{details[1]}}</a>
-              <a class="navbar-brand" href="/login" style="float: right;">Logout</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                    <a class="nav-link active" href="/sellerhomepage/{{details[0]}}" >Home <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li>
+                     <a class="nav-link" href="/login" style="float: right;">Logout</a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </nav>
 
