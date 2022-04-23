@@ -345,19 +345,23 @@ def productPage(user_id, product_id):
 
     p = getProductDetails(product_id)
 
+    categories = getAllCategories()
+
     c = getCategoryFromProduct(product_id)
 
     r = getReviewsOfProduct(product_id)
     total_stars = 0
     for i in r:
         total_stars += i[2]
-    avg_stars = total_stars/len(r)
+    if(len(r)!=0):
+        avg_stars = total_stars/len(r)
+    else:
+        avg_stars = 0
 
     review_users = []
     for i in r:
         review_users.append(getDetails(i[3]))
-    print(review_users)
-    return render_template("product.html", details = d, product = p, category = c, reviews = r, average = avg_stars, users = review_users)
+    return render_template("product.html", details = d, product = p, category = c, reviews = r, average = avg_stars, users = review_users, categories = categories)
 
 
 # Helper functions
@@ -382,6 +386,12 @@ def getCategoryFromProduct(product_id):
 def getReviewsOfProduct(product_id):
     cur = mysql.connection.cursor()
     s = "select * from reviews where product_id = " + str(product_id)
+    cur.execute(s)
+    return cur.fetchall()
+
+def getAllCategories():
+    cur = mysql.connection.cursor()
+    s = "select * from categories"
     cur.execute(s)
     return cur.fetchall()
     
