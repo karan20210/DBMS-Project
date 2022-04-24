@@ -1,6 +1,7 @@
 from datetime import datetime
 import random
 from unicodedata import category
+from django.shortcuts import render
 from flask import Flask, redirect, render_template, request
 from flask_mysqldb import MySQL
 import yaml
@@ -382,22 +383,14 @@ def addToCart(user_id, product_id):
     l = "/cart/" + str(user_id)
     return redirect(l)
 
-@app.route("/cart/<user_id>/addquantity/<product_id>")
+@app.route("/<user_id>/addquantity/<product_id>")
 def addQuantity(user_id, product_id):
     cur = mysql.connection.cursor()
 
+    current_cartId = getCurrentCartId(user_id)
+
     s = "create view my_carts as select * from cart where ccustomerid = " + str(user_id)
     cur.execute(s)
-
-    s = "select count(*) from my_carts"         # my_Carts is a view select * from carts where user_id = ccustomerid
-    cur.execute(s)
-    
-    if(cur.fetchall()[0][0] == 0):
-        current_cartId = 1
-    else:
-        s = "select max(cart_id) from my_carts"
-        cur.execute(s)
-        current_cartId = cur.fetchall()[0][0]
     
     s = "create view my_current_cart as select * from my_carts where cart_id = " + str(current_cartId)
     cur.execute(s)
@@ -415,22 +408,14 @@ def addQuantity(user_id, product_id):
     l = "/cart/" + str(user_id)
     return redirect(l)
 
-@app.route("/cart/<user_id>/reducequantity/<product_id>")
+@app.route("/<user_id>/reducequantity/<product_id>")
 def reduceQuantity(user_id, product_id):
     cur = mysql.connection.cursor()
 
+    current_cartId = getCurrentCartId(user_id)
+
     s = "create view my_carts as select * from cart where ccustomerid = " + str(user_id)
     cur.execute(s)
-
-    s = "select count(*) from my_carts"         # my_Carts is a view select * from carts where user_id = ccustomerid
-    cur.execute(s)
-    
-    if(cur.fetchall()[0][0] == 0):
-        current_cartId = 1
-    else:
-        s = "select max(cart_id) from my_carts"
-        cur.execute(s)
-        current_cartId = cur.fetchall()[0][0]
     
     s = "create view my_current_cart as select * from my_carts where cart_id = " + str(current_cartId)
     cur.execute(s)
@@ -453,6 +438,72 @@ def reduceQuantity(user_id, product_id):
 
     l = "/cart/" + str(user_id)
     return redirect(l)
+
+@app.route("/checkout/<user_id>")
+def checkout(user_id):
+    d = getDetails(user_id)
+    c = getAllCategories()
+    price = getCurrentCartPrice(user_id)
+    return render_template('checkout.html', details = d, categories = c, t = price)
+
+@app.route("/placeorder/<user_id>")
+def placeOrder(user_id):
+    cur = mysql.connection.cursor()
+    d = getDetails(user_id)
+    cat = getAllCategories()
+
+    current_cartId = getCurrentCartId(user_id)
+    s = "create view my_carts as select * from cart where ccustomerid = " + str(user_id)
+    cur.execute(s)
+
+    s = "create view my_current_cart as select * from my_carts where cart_id = " + str(current_cartId)
+    cur.execute(s)
+
+    s = "select * from my_current_cart"
+    cur.execute(s)
+
+    c = cur.fetchall()
+    print(c)
+
+    products_ordered_id = []
+    for i in c:
+        products_ordered_id.append(i[2])
+    
+    products_ordered = []
+    for i in products_ordered_id:
+        s = "select * from products where product_id = " + str(i)
+        cur.execute(s)
+        products_ordered.append(cur.fetchall())
+    
+    quantity_ordered = []
+    for i in c:
+        quantity_ordered.append(i[3])
+    
+    final_price = []
+    total = 0
+    for i in range(len(c)):
+        final_price.append(round(quantity_ordered[i] * products_ordered[i][0][3], 2))
+        total += final_price[i]
+        
+    total = round(total, 2)
+
+    s = "drop view my_current_cart"
+    cur.execute(s)
+    s = "drop view my_carts"
+    cur.execute(s)
+
+    s = "select count(*) from orders"
+    cur.execute(s)
+    orderId = cur.fetchall()[0][0] + 1
+
+    date = datetime.today().strftime('%Y-%m-%d')
+
+    s = "Insert into orders values (%s, %s, %s, %s)"
+    vals = (int(orderId), int(user_id), date, int(current_cartId))
+    cur.execute(s,vals)
+    mysql.connection.commit()
+
+    return render_template("orderPlaced.html", details = d, categories = cat, products = products_ordered, q = quantity_ordered, p = final_price, t = total, orderId = orderId, date = date)
 
 
 # Helper functions
@@ -494,7 +545,90 @@ def ifCartOrdered(user_id, cart_id):
     if(len(cur.fetchall()) == 0):
         return False
     return True
+
+def getCurrentCartPrice(user_id):
+    cur = mysql.connection.cursor()
+    s = "create view my_carts as select * from cart where ccustomerid = " + str(user_id)
+    cur.execute(s)
+
+    s = "select count(*) from my_carts"         # my_Carts is a view select * from carts where user_id = ccustomerid
+    cur.execute(s)
     
+    if(cur.fetchall()[0][0] == 0):
+        current_cartId = 1
+    else:
+        s = "select max(cart_id) from my_carts"
+        cur.execute(s)
+        current_cartId = cur.fetchall()[0][0]
+        cartOrdered = ifCartOrdered(user_id, current_cartId)
+        if(cartOrdered):
+            current_cartId +=1
+    
+    s = "create view my_current_cart as select * from my_carts where cart_id = " + str(current_cartId)
+    cur.execute(s)
+
+    s = "select * from my_current_cart"
+    cur.execute(s)
+
+    c = cur.fetchall()
+    print(c)
+
+    products_ordered_id = []
+    for i in c:
+        products_ordered_id.append(i[2])
+    
+    products_ordered = []
+    for i in products_ordered_id:
+        s = "select * from products where product_id = " + str(i)
+        cur.execute(s)
+        products_ordered.append(cur.fetchall())
+
+
+    quantity_ordered = []
+    for i in c:
+        quantity_ordered.append(i[3])
+
+    final_price = []
+    total = 0
+    for i in range(len(c)):
+        final_price.append(round(quantity_ordered[i] * products_ordered[i][0][3], 2))
+        total += final_price[i]
+        
+    total = round(total, 2)
+
+    s = "drop view my_current_cart"
+    cur.execute(s)
+    s = "drop view my_carts"
+    cur.execute(s)
+
+    return total
+
+def getCurrentCartId(user_id):
+    cur = mysql.connection.cursor()
+    s = "select * from customer where customer_ID = " + str(user_id)
+    cur.execute(s)
+    d = cur.fetchall()[0]
+
+    s = "create view my_carts as select * from cart where ccustomerid = " + str(user_id)
+    cur.execute(s)
+
+    s = "select count(*) from my_carts"         # my_Carts is a view select * from carts where user_id = ccustomerid
+    cur.execute(s)
+
+    if(cur.fetchall()[0][0] == 0):
+        current_cartId = 1
+    else:
+        s = "select max(cart_id) from my_carts"
+        cur.execute(s)
+        current_cartId = cur.fetchall()[0][0]
+        cartOrdered = ifCartOrdered(user_id, current_cartId)
+        if(cartOrdered):
+            current_cartId +=1
+    
+    s = "drop view my_carts"
+    cur.execute(s)
+
+    return current_cartId
     
 if(__name__ == "__main__"):
     app.run(debug = True)

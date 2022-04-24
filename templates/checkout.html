@@ -104,7 +104,7 @@
                                                     </label> <input type="text" required class="form-control"> </div>
                                             </div>
                                         </div>
-                                        <div class="card-footer"> <button type="button" class="subscribe btn btn-block shadow-sm"> Confirm Payment </button>
+                                        <div class="card-footer"> <button type="button" class="subscribe btn btn-block shadow-sm"> <a href = "/placeorder/{{details[0]}}" style="color: white;"> Confirm Payment </a> </button>
                                     </form>
                                 </div>
                             </div> <!-- End -->
@@ -141,6 +141,17 @@
                         </div>
                     </div>
                 </div>
+                <div class="card mb-5 border-dark">
+                    <div class="card-body p-4">
+                      <div class="float-end">
+                        <p class="mb-0 me-5 d-flex align-items-center">
+                          <span class="small text-muted me-2 mr-2">Order total:</span> <span class="lead fw-normal">Rs. {{t}}</span>
+                        </p>
+                      </div>
+          
+                    </div>
+                  </div>
             </div>
+            
     </body>
 </HTML>
