@@ -304,10 +304,10 @@ def cart(user_id):
     cur.execute(s)
     d = cur.fetchall()[0]
 
-    s = "select * from cart where ccustomerid = " + str(user_id) + " and cart_id in (select max(cart_id) from cart)"
+    s = "select * from cart where ccustomerid = " + str(user_id) + " and cart_id in (select max(cart_id) from cart where ccustomerid = " + str(user_id) + ")"
     cur.execute(s)
     c = cur.fetchall()
-    # print(c)
+    print(c)
 
     products_ordered_id = []
     for i in c:
@@ -329,7 +329,7 @@ def cart(user_id):
     final_price = []
     total = 0
     for i in range(len(c)):
-        final_price.append(quantity_ordered[i] * products_ordered[i][0][3])
+        final_price.append(round(quantity_ordered[i] * products_ordered[i][0][3], 2))
         total += final_price[i]
         
     total = round(total, 2)
@@ -363,7 +363,117 @@ def productPage(user_id, product_id):
         review_users.append(getDetails(i[3]))
     return render_template("product.html", details = d, product = p, category = c, reviews = r, average = avg_stars, users = review_users, categories = categories)
 
+@app.route("/<user_id>/addtocart/<product_id>")
+def addToCart(user_id, product_id):
+    cur = mysql.connection.cursor()
 
+    s = "create view my_carts as select * from cart where ccustomerid = " + str(user_id)
+    cur.execute(s)
+
+    s = "select count(*) from my_carts"         # my_Carts is a view select * from carts where user_id = ccustomerid
+    cur.execute(s)
+    
+    if(cur.fetchall()[0][0] == 0):
+        current_cartId = 1
+    else:
+        s = "select max(cart_id) from my_carts"
+        cur.execute(s)
+        current_cartId = cur.fetchall()[0][0]
+        #  Add a check for whether cart is checked out or not when making changes in the DB
+    
+    s = "create view my_current_cart as select * from my_carts where cart_id = " + str(current_cartId)
+    cur.execute(s)
+    
+    s = "select * from my_current_cart where product_id = " + str(product_id)
+    cur.execute(s)
+    if(len(cur.fetchall()) == 0):
+        s = "Insert into cart values (%s, %s, %s, %s)"
+        vals = (int(current_cartId), int(user_id), int(product_id), int(1))
+        cur.execute(s, vals)
+        mysql.connection.commit()
+    else:
+        s = "UPDATE my_current_cart SET quantity_ordered = quantity_ordered + 1 where product_id = " + str(product_id)
+        cur.execute(s)
+        mysql.connection.commit()
+
+    s = "drop view my_current_cart"
+    cur.execute(s)
+    s = "drop view my_carts"
+    cur.execute(s)
+    l = "/homepage/" + str(user_id)
+    return redirect(l)
+
+@app.route("/cart/<user_id>/addquantity/<product_id>")
+def addQuantity(user_id, product_id):
+    cur = mysql.connection.cursor()
+
+    s = "create view my_carts as select * from cart where ccustomerid = " + str(user_id)
+    cur.execute(s)
+
+    s = "select count(*) from my_carts"         # my_Carts is a view select * from carts where user_id = ccustomerid
+    cur.execute(s)
+    
+    if(cur.fetchall()[0][0] == 0):
+        current_cartId = 1
+    else:
+        s = "select max(cart_id) from my_carts"
+        cur.execute(s)
+        current_cartId = cur.fetchall()[0][0]
+    
+    s = "create view my_current_cart as select * from my_carts where cart_id = " + str(current_cartId)
+    cur.execute(s)
+    
+    s = "UPDATE my_current_cart SET quantity_ordered = quantity_ordered + 1 where product_id = " + str(product_id)
+    cur.execute(s)
+    mysql.connection.commit()
+
+    s = "drop view my_current_cart"
+    cur.execute(s)
+
+    s = "drop view my_carts"
+    cur.execute(s)
+
+    l = "/cart/" + str(user_id)
+    return redirect(l)
+
+@app.route("/cart/<user_id>/reducequantity/<product_id>")
+def reduceQuantity(user_id, product_id):
+    cur = mysql.connection.cursor()
+
+    s = "create view my_carts as select * from cart where ccustomerid = " + str(user_id)
+    cur.execute(s)
+
+    s = "select count(*) from my_carts"         # my_Carts is a view select * from carts where user_id = ccustomerid
+    cur.execute(s)
+    
+    if(cur.fetchall()[0][0] == 0):
+        current_cartId = 1
+    else:
+        s = "select max(cart_id) from my_carts"
+        cur.execute(s)
+        current_cartId = cur.fetchall()[0][0]
+    
+    s = "create view my_current_cart as select * from my_carts where cart_id = " + str(current_cartId)
+    cur.execute(s)
+    
+    s = "UPDATE my_current_cart SET quantity_ordered = quantity_ordered - 1 where product_id = " + str(product_id)
+    cur.execute(s)
+    mysql.connection.commit()
+
+    s = "select quantity_ordered from my_current_cart where product_id = " + str(product_id)
+    cur.execute(s)
+    if(cur.fetchall()[0][0] == 0):
+        s = "delete from my_current_cart where product_id = " + str(product_id)
+        cur.execute(s)
+        mysql.connection.commit()
+
+    s = "drop view my_current_cart"
+    cur.execute(s)
+    s = "drop view my_carts"
+    cur.execute(s)
+
+    l = "/cart/" + str(user_id)
+    return redirect(l)
 # Helper functions
 def getDetails(user_id):
     cur = mysql.connection.cursor()
