@@ -39,7 +39,7 @@ def customerlogin():
 
     # Checking whether it exists in the DB or not
     cur = mysql.connection.cursor()
-    cur.execute("select username,password,customerID from customer_logindetails")
+    cur.execute("select username,password,ID from logindetails where type = 'customer'")
     
     records = cur.fetchall()
     print(records)
@@ -61,7 +61,7 @@ def sellerlogin():
 
     # Checking whether it exists in the DB or not
     cur = mysql.connection.cursor()
-    cur.execute("select username,password,sellerID from seller_logindetails")
+    cur.execute("select username,password,ID from logindetails where type = 'seller'")
     
     records = cur.fetchall()
     print(records)
@@ -70,54 +70,6 @@ def sellerlogin():
         if username == i[0] and pwd == i[1]:
             l = "/sellerhomepage/" + str(i[2])
             return redirect(l)
-    
-
-@app.route("/managerlogin", methods = ['POST'])
-def managerlogin():
-     # Getting data from form request
-    username = request.form['username']
-    pwd = request.form['password']
-
-    # Checking whether it exists in the DB or not
-    cur = mysql.connection.cursor()
-    cur.execute("select username,password,managerID from manager_logindetails")
-    
-    records = cur.fetchall()
-    print(records)
-
-    for i in records:
-        if username == i[0] and pwd == i[1]:
-            print("Success")
-            return render_template('homepage.html')
-        else:
-            print("Failure")
-    mysql.connection.commit()
-    cur.close()
-
-    return render_template('login.html')
-
-@app.route("/cclogin", methods = ['POST'])
-def cclogin():
-     # Getting data from form request
-    username = request.form['username']
-    pwd = request.form['password']
-
-    # Checking whether it exists in the DB or not
-    cur = mysql.connection.cursor()
-    cur.execute("select username,password,CCID from CC_LoginDetails")
-    
-    records = cur.fetchall()
-    print(records)
-
-    for i in records:
-        if username == i[0] and pwd == i[1]:
-            print("Success")
-            break
-        else:
-            print("Failure")
-    mysql.connection.commit()
-    cur.close()
-
     return render_template('login.html')
 
 @app.route("/dplogin", methods = ['POST'])
@@ -128,7 +80,7 @@ def dplogin():
 
     # Checking whether it exists in the DB or not
     cur = mysql.connection.cursor()
-    cur.execute("select username,password,DPID from DP_LoginDetails")
+    cur.execute("select username,password,ID from logindetails where type = 'dp'")
     
     records = cur.fetchall()
     print(records)
@@ -169,8 +121,8 @@ def customerSignup():
     cur.execute(s, vals)
 
     # Inserting into Customer_LoginDetails table
-    s = "INSERT INTO Customer_LoginDetails (Username, Password, CustomerID) VALUES (%s, %s, %s)"
-    vals = (username, pwd, int(customerID))
+    s = "INSERT INTO LoginDetails (Username, Password, Type, ID) VALUES (%s, %s, %s, %s)"
+    vals = (username, pwd, 'customer', int(customerID))
     cur.execute(s, vals)
 
     mysql.connection.commit()
@@ -199,8 +151,8 @@ def sellerSignup():
     cur.execute(s, vals)
 
     # Inserting into Customer_LoginDetails table
-    s = "INSERT INTO Seller_LoginDetails (Username, Password, sellerID) VALUES (%s, %s, %s)"
-    vals = (username, pwd, int(sellerID))
+    s = "INSERT INTO LoginDetails (Username, Password, Type, ID) VALUES (%s, %s, %s, %s)"
+    vals = (username, pwd, 'seller', int(sellerID))
     cur.execute(s, vals)
 
     mysql.connection.commit()
@@ -304,8 +256,28 @@ def cart(user_id):
     cur.execute(s)
     d = cur.fetchall()[0]
 
-    s = "select * from cart where ccustomerid = " + str(user_id) + " and cart_id in (select max(cart_id) from cart where ccustomerid = " + str(user_id) + ")"
+    s = "create view my_carts as select * from cart where ccustomerid = " + str(user_id)
     cur.execute(s)
+
+    s = "select count(*) from my_carts"         # my_Carts is a view select * from carts where user_id = ccustomerid
+    cur.execute(s)
+
+    if(cur.fetchall()[0][0] == 0):
+        current_cartId = 1
+    else:
+        s = "select max(cart_id) from my_carts"
+        cur.execute(s)
+        current_cartId = cur.fetchall()[0][0]
+        cartOrdered = ifCartOrdered(user_id, current_cartId)
+        if(cartOrdered):
+            current_cartId +=1
+    
+    s = "create view my_current_cart as select * from my_carts where cart_id = " + str(current_cartId)
+    cur.execute(s)
+
+    s = "select * from my_current_cart"
+    cur.execute(s)
+
     c = cur.fetchall()
     print(c)
 
@@ -319,12 +291,10 @@ def cart(user_id):
         cur.execute(s)
         products_ordered.append(cur.fetchall())
 
-    # print(products_ordered[0])
 
     quantity_ordered = []
     for i in c:
         quantity_ordered.append(i[3])
-    # print(quantity_ordered)
 
     final_price = []
     total = 0
@@ -337,6 +307,12 @@ def cart(user_id):
     s = "select * from categories";
     cur.execute(s)
     c = cur.fetchall()
+
+    s = "drop view my_current_cart"
+    cur.execute(s)
+    s = "drop view my_carts"
+    cur.execute(s)
+
     return render_template("cart.html", details = d, products = products_ordered, q = quantity_ordered, p = final_price, t = total, categories = c)
 
 @app.route("/<user_id>/products/<product_id>")
@@ -379,6 +355,9 @@ def addToCart(user_id, product_id):
         s = "select max(cart_id) from my_carts"
         cur.execute(s)
         current_cartId = cur.fetchall()[0][0]
+        cartOrdered = ifCartOrdered(user_id, current_cartId)
+        if(cartOrdered):
+            current_cartId +=1
         #  Add a check for whether cart is checked out or not when making changes in the DB
     
     s = "create view my_current_cart as select * from my_carts where cart_id = " + str(current_cartId)
@@ -400,7 +379,7 @@ def addToCart(user_id, product_id):
     cur.execute(s)
     s = "drop view my_carts"
     cur.execute(s)
-    l = "/homepage/" + str(user_id)
+    l = "/cart/" + str(user_id)
     return redirect(l)
 
 @app.route("/cart/<user_id>/addquantity/<product_id>")
@@ -474,6 +453,8 @@ def reduceQuantity(user_id, product_id):
 
     l = "/cart/" + str(user_id)
     return redirect(l)
+
+
 # Helper functions
 def getDetails(user_id):
     cur = mysql.connection.cursor()
@@ -504,6 +485,16 @@ def getAllCategories():
     s = "select * from categories"
     cur.execute(s)
     return cur.fetchall()
+
+def ifCartOrdered(user_id, cart_id):
+    print("Hi")
+    cur = mysql.connection.cursor()
+    s = "select * from orders where OCustomerID = " + str(user_id) + " and Cart_ID = " + str(cart_id)
+    cur.execute(s)
+    if(len(cur.fetchall()) == 0):
+        return False
+    return True
+    
     
 if(__name__ == "__main__"):
     app.run(debug = True)
