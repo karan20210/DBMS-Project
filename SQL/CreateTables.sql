@@ -1,8 +1,6 @@
 CREATE DATABASE PROJECT;
 use PROJECT;
 
-
-
 CREATE TABLE `CUSTOMER` (
   `Customer_ID` Integer NOT NULL check(Customer_ID>0),
   `Name` VARCHAR(50) NOT NULL,
@@ -38,8 +36,7 @@ CREATE TABLE `PRODUCTS` (
   `Seller_ID` Integer NOT NULL,
   `Days_to_Arrive` Integer NOT NULL check(Days_to_Arrive>0),
   `Description` VARCHAR(500) NOT NULL,
-  `ImageSource` BLOB NOT NULL,
-  `Date_Registration` date not null check(Date_Registration>20210101),
+  `ImageSource` VARCHAR(500) NOT NULL,
   PRIMARY KEY (`Product_ID`),
   FOREIGN KEY(Category_ID) REFERENCES CATEGORIES(Category_ID), 
 FOREIGN KEY(Seller_ID) REFERENCES SELLER(Seller_ID)
@@ -72,17 +69,17 @@ FOREIGN KEY(Product_ID) REFERENCES PRODUCTS(Product_ID)
 
 
 CREATE TABLE `Orders` (
-  `Order_ID` Integer check(Order_ID>0),
+   `Order_ID` Integer check(Order_ID>0),
   `OCustomerID` Integer NOT NULL,
-  `Date_Of_Order` Date NOT NULL check(Date_Of_Delivery>20210101),
+  `Date_Of_Order` Date NOT NULL check(Date_Of_Order>20210101),
   `Cart_ID` Integer NOT NULL,
   PRIMARY KEY (`Order_ID`), 
 FOREIGN KEY(OCustomerID) REFERENCES Cart(CCustomerID), 
 FOREIGN KEY(Cart_ID) REFERENCES Cart(Cart_ID)
-
 );
+
 CREATE TABLE `Payment` (
-  `Payment_ID` Integer NOT NULL check(Payment_ID>0),
+   `Payment_ID` Integer NOT NULL check(Payment_ID>0),
   `OrderID` Integer NOT NULL,
   `Type` VARCHAR(50) NOT NULL,
   `Status` VARCHAR(15) NOT NULL check(Status='FAILED' or Status='PROCESSING' or Status='SUCCESSFUL'),
@@ -90,6 +87,7 @@ CREATE TABLE `Payment` (
   `Amount` Float NOT NULL,
   PRIMARY KEY (`Payment_ID`), 
 FOREIGN KEY(OrderID) REFERENCES Orders(Order_ID) 
+
 );
 CREATE TABLE `Delivery_Person` (
   `DP_ID` Integer check(DP_ID>0),
@@ -109,7 +107,7 @@ FOREIGN KEY(DP_ID) REFERENCES Delivery_Person(DP_ID)
 );
 
 CREATE TABLE `Returns` (
-  `Order_Id` Integer NOT NULL,
+   `Order_Id` Integer NOT NULL,
   `DP_ID` Integer NOT NULL,
   `Return_Status` VARCHAR(50) NOT NULL, 
   `DateofReturn` date not null check(DateofReturn>20210101),
@@ -135,7 +133,6 @@ FOREIGN KEY(QCustomerID) REFERENCES Customer(Customer_ID),
 FOREIGN KEY(CC_ID) REFERENCES Customer_Care(CC_ID)
 );
 
-
 CREATE TABLE `LoginDetails` (
 	`Username` VARCHAR(50) NOT NULL UNIQUE,
     `Password` VARCHAR(20) NOT NULL,
@@ -145,3 +142,4 @@ CREATE TABLE `LoginDetails` (
 );
 
 
+show tables;
