@@ -1,16 +1,7 @@
 CREATE DATABASE PROJECT;
 use PROJECT;
- 
-create table `Department`(
-  `Department_ID` int check(Department_ID>0), 
-  `Department_Name` varchar(40) not null unique, 
-  primary key(department_id));
 
-create table `Manager`(
-  `Manager_ID` int check(manager_id>0),
-   `Manager_Name` varchar(100) not null,
-   `Department_ID` int, 
-   foreign key(Department_ID) references Department(Department_ID) ,primary key(Manager_Id));
+
 
 CREATE TABLE `CUSTOMER` (
   `Customer_ID` Integer NOT NULL check(Customer_ID>0),
@@ -47,7 +38,8 @@ CREATE TABLE `PRODUCTS` (
   `Seller_ID` Integer NOT NULL,
   `Days_to_Arrive` Integer NOT NULL check(Days_to_Arrive>0),
   `Description` VARCHAR(500) NOT NULL,
-  `ImageSource` VARCHAR(500) NOT NULL,
+  `ImageSource` BLOB NOT NULL,
+  `Date_Registration` date not null check(Date_Registration>20210101),
   PRIMARY KEY (`Product_ID`),
   FOREIGN KEY(Category_ID) REFERENCES CATEGORIES(Category_ID), 
 FOREIGN KEY(Seller_ID) REFERENCES SELLER(Seller_ID)
@@ -77,42 +69,41 @@ FOREIGN KEY(CCustomerID) REFERENCES Customer(Customer_ID),
 FOREIGN KEY(Product_ID) REFERENCES PRODUCTS(Product_ID)
 );
 
+
+
+CREATE TABLE `Orders` (
+  `Order_ID` Integer check(Order_ID>0),
+  `OCustomerID` Integer NOT NULL,
+  `Date_Of_Order` Date NOT NULL check(Date_Of_Delivery>20210101),
+  `Cart_ID` Integer NOT NULL,
+  PRIMARY KEY (`Order_ID`), 
+FOREIGN KEY(OCustomerID) REFERENCES Cart(CCustomerID), 
+FOREIGN KEY(Cart_ID) REFERENCES Cart(Cart_ID)
+
+);
 CREATE TABLE `Payment` (
   `Payment_ID` Integer NOT NULL check(Payment_ID>0),
-  `PCustomerID` Integer NOT NULL,
+  `OrderID` Integer NOT NULL,
   `Type` VARCHAR(50) NOT NULL,
   `Status` VARCHAR(15) NOT NULL check(Status='FAILED' or Status='PROCESSING' or Status='SUCCESSFUL'),
   `DatePayment` Date NOT NULL check(DatePayment>20210101),
   `Amount` Float NOT NULL,
   PRIMARY KEY (`Payment_ID`), 
-FOREIGN KEY(PCustomerID) REFERENCES Customer(Customer_ID) 
+FOREIGN KEY(OrderID) REFERENCES Orders(Order_ID) 
 );
-
-CREATE TABLE `Orders` (
-  `Order_ID` Integer check(Order_ID>0),
-  `OCustomerID` Integer NOT NULL,
-  `Date_Of_Delivery` Date NOT NULL check(Date_Of_Delivery>20210101),
-  `Payment_ID` Integer NOT NULL,
-  `Cart_ID` Integer NOT NULL,
-  PRIMARY KEY (`Order_ID`), 
-FOREIGN KEY(OCustomerID) REFERENCES Cart(CCustomerID), 
-FOREIGN KEY(Payment_ID) REFERENCES Payment(Payment_ID),
-FOREIGN KEY(Cart_ID) REFERENCES Cart(Cart_ID)
-
-);
-
 CREATE TABLE `Delivery_Person` (
   `DP_ID` Integer check(DP_ID>0),
   `Name` VARCHAR(100) NOT NULL,
   `DOJ` Date NOT NULL check(DOJ>20210101),
-  `Contact` VARCHAR(100) NOT NULL,`Manager_ID` int ,
-  PRIMARY KEY (`DP_ID`),foreign key(Manager_ID) references Manager(Manager_ID)
+  `Contact` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`DP_ID`)
 );
 
 CREATE TABLE `Deliveries` (
   `Order_ID` Integer NOT NULL,
   `DP_ID` Integer NOT NULL,
   `Order_Status` VARCHAR(50) NOT NULL,
+  `DateofDelivery` date not null check(DateofDelivery>20210101),
 FOREIGN KEY(Order_ID) REFERENCES ORDERS(ORDER_ID),
 FOREIGN KEY(DP_ID) REFERENCES Delivery_Person(DP_ID)
 );
@@ -121,6 +112,7 @@ CREATE TABLE `Returns` (
   `Order_Id` Integer NOT NULL,
   `DP_ID` Integer NOT NULL,
   `Return_Status` VARCHAR(50) NOT NULL, 
+  `DateofReturn` date not null check(DateofReturn>20210101),
 FOREIGN KEY(Order_ID) REFERENCES ORDERS(ORDER_ID),
 FOREIGN KEY(DP_ID) REFERENCES Delivery_Person(DP_ID)
 );
@@ -128,8 +120,8 @@ FOREIGN KEY(DP_ID) REFERENCES Delivery_Person(DP_ID)
 CREATE TABLE `Customer_Care` (
   `CC_ID` Integer check(CC_ID>0),
   `Name` VARCHAR(50) not null,
-  `Contact_No` VARCHAR(15) not null,`Manager_ID` int ,
-  PRIMARY KEY (`CC_ID`),foreign key(Manager_ID) references Manager(Manager_ID)
+  `Contact_No` VARCHAR(15) not null,
+  PRIMARY KEY (`CC_ID`)
 );
 
 CREATE TABLE `Customer_Queries` (
@@ -143,36 +135,13 @@ FOREIGN KEY(QCustomerID) REFERENCES Customer(Customer_ID),
 FOREIGN KEY(CC_ID) REFERENCES Customer_Care(CC_ID)
 );
 
-CREATE TABLE `Customer_LoginDetails` (
+
+CREATE TABLE `LoginDetails` (
 	`Username` VARCHAR(50) NOT NULL UNIQUE,
     `Password` VARCHAR(20) NOT NULL,
-    `CustomerID` int, foreign key (CustomerID) references Customer(Customer_ID)
+    `Type` VARCHAR(10) not null,
+    `Id` int not null,
+    primary key(Type, ID)
 );
 
-CREATE TABLE `Seller_LoginDetails` (
-	`Username` VARCHAR(50) NOT NULL UNIQUE,
-    `Password` VARCHAR(20) NOT NULL,
-    `SellerID` int, foreign key (SellerID) references Seller(Seller_ID)
-);
-
-CREATE TABLE `Manager_LoginDetails` (
-	`Username` VARCHAR(50) NOT NULL UNIQUE,
-    `Password` VARCHAR(20) NOT NULL,
-    `ManagerID` int, foreign key (ManagerID) references Manager(Manager_ID)
-);
-
-
-CREATE TABLE `DP_LoginDetails` (
-	`Username` VARCHAR(50) NOT NULL UNIQUE,
-    `Password` VARCHAR(20) NOT NULL,
-    `DPID` int, foreign key (DPID) references Delivery_Person(DP_ID)
-);
-
-CREATE TABLE `CC_LoginDetails` (
-	`Username` VARCHAR(50) NOT NULL UNIQUE,
-    `Password` VARCHAR(20) NOT NULL,
-    `CCID` int, foreign key (CCID) references Customer_Care(CC_ID)
-);
-
-show tables;
 
