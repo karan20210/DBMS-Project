@@ -86,6 +86,14 @@
           <span>Rs. {{product[3]}}</span>
           <a href="/{{details[0]}}/addtocart/{{product[0]}}" class="cart-btn">Add to cart</a>
         </div>
+        <br> <br>
+        <div class = "seller-details">
+          <u>Seller Details</u>
+          <br>
+          Name: {{seller[1]}}
+          <br>
+          Contact Number: {{seller[3]}}
+        </div>
       </div>
     </main>
     <br> <br>
@@ -149,7 +157,7 @@
     </div>
 
     <div class="container row">
-        <div class="add-review-button btn mb-3 offset-11">Add a review   <i class="fa fa-arrow-right"></i> </div>
+        <div class="add-review-button btn mb-3 offset-11"> <a href = "/{{details[0]}}/addreview/{{product[0]}}" style="color: white;" >Add a review </a>  <i class="fa fa-arrow-right"></i> </div>
     </div>
   </body>
 </html>

@@ -1,3 +1,4 @@
+from crypt import methods
 from datetime import datetime
 import random
 from unicodedata import category
@@ -340,7 +341,16 @@ def productPage(user_id, product_id):
     review_users = []
     for i in r:
         review_users.append(getDetails(i[3]))
-    return render_template("product.html", details = d, product = p, category = c, reviews = r, average = avg_stars, users = review_users, categories = categories)
+    
+    seller_id = p[5]
+
+    avg_stars = round(avg_stars, 2)
+
+    cur = mysql.connection.cursor()
+    s = "select * from seller where seller_id = "  + str(seller_id)
+    cur.execute(s)
+    seller = cur.fetchall()[0]
+    return render_template("product.html", details = d, product = p, category = c, reviews = r, average = avg_stars, users = review_users, categories = categories, seller = seller)
 
 @app.route("/<user_id>/addtocart/<product_id>")
 def addToCart(user_id, product_id):
@@ -429,7 +439,11 @@ def reduceQuantity(user_id, product_id):
     s = "select quantity_ordered from my_current_cart where product_id = " + str(product_id)
     cur.execute(s)
     if(cur.fetchall()[0][0] == 0):
+        s = "SET FOREIGN_KEY_CHECKS=0"
+        cur.execute(s)
         s = "delete from my_current_cart where product_id = " + str(product_id)
+        cur.execute(s)
+        s = "SET FOREIGN_KEY_CHECKS=1"
         cur.execute(s)
         mysql.connection.commit()
 
@@ -599,6 +613,32 @@ def myOrders(user_id):
     cur.execute(s)
 
     return render_template("myorders.html", details = d, categories = cat, orders = orders)
+
+@app.route("/<user_id>/addreview/<product_id>")
+def addReview(user_id, product_id):
+    d = getDetails(user_id)
+    p = product_id
+    return render_template("addReview.html", details = d, productid = p)
+
+@app.route("/<user_id>/newreview/<product_id>", methods = ['POST'])
+def newReview(user_id, product_id):
+    print(request.form)
+    stars = request.form['stars']
+    text= request.form['write-a-review']
+
+    cur = mysql.connection.cursor()
+    s = "select count(*) from reviews"
+    cur.execute(s)
+    review_id = cur.fetchall()[0][0] + 1
+    d = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+
+    s = "Insert into reviews values (%s, %s, %s, %s, %s, %s)"
+    vals = (int(review_id), text, int(stars), int(user_id), int(product_id), d)
+    cur.execute(s, vals)
+    mysql.connection.commit()
+    l = "/" + str(user_id) + "/addreview/" + str(product_id)
+    return redirect(l)
+
 
 
 # Helper functions
