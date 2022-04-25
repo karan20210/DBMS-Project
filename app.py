@@ -614,6 +614,61 @@ def myOrders(user_id):
 
     return render_template("myorders.html", details = d, categories = cat, orders = orders)
 
+@app.route("/orderinfo/<order_id>/<user_id>")
+def orderInfo(order_id, user_id):
+    cur = mysql.connection.cursor()
+    d = getDetails(user_id)
+    cat = getAllCategories()
+
+    s = "select cart_id from orders where order_id = " + str(order_id)
+    cur.execute(s)
+    current_cartId = cur.fetchall()[0][0]
+
+    print("Current cart: ", current_cartId)
+    s = "create view my_carts as select * from cart where ccustomerid = " + str(user_id)
+    cur.execute(s)
+
+    s = "create view my_current_cart as select * from my_carts where cart_id = " + str(current_cartId)
+    cur.execute(s)
+
+    s = "select * from my_current_cart"
+    cur.execute(s)
+
+    c = cur.fetchall()
+    print(c)
+
+    products_ordered_id = []
+    for i in c:
+        products_ordered_id.append(i[2])
+    
+    products_ordered = []
+    for i in products_ordered_id:
+        s = "select * from products where product_id = " + str(i)
+        cur.execute(s)
+        products_ordered.append(cur.fetchall())
+    
+    quantity_ordered = []
+    for i in c:
+        quantity_ordered.append(i[3])
+    
+    final_price = []
+    total = 0
+    for i in range(len(c)):
+        final_price.append(round(quantity_ordered[i] * products_ordered[i][0][3], 2))
+        total += final_price[i]
+        
+    total = round(total, 2)
+
+    s = "drop view my_current_cart"
+    cur.execute(s)
+    s = "drop view my_carts"
+    cur.execute(s)
+
+    date = datetime.today().strftime('%Y-%m-%d')
+
+    return render_template("orderConfirmed.html", details = d, categories = cat, products = products_ordered, q = quantity_ordered, p = final_price, t = total, orderId = order_id, date = date)
+
+
 @app.route("/<user_id>/addreview/<product_id>")
 def addReview(user_id, product_id):
     d = getDetails(user_id)
