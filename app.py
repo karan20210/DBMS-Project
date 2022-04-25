@@ -177,8 +177,10 @@ def homepage(user_id):
     for i in range(3):
         no = random.randint(0, len(p) - 1)
         ps.append(p[no])   
+    
+    cart_price = getCurrentCartPrice(user_id)
 
-    return render_template('homepage.html', details = d, categories = c, products = ps)
+    return render_template('homepage.html', details = d, categories = c, products = ps, cart_price = cart_price)
 
 @app.route("/sellerhomepage/<seller_id>")
 def sellerhomepage(seller_id):
@@ -240,7 +242,7 @@ def myprofile(user_id):
     cur = mysql.connection.cursor()
     d = getDetails(user_id)
 
-    s = "select username from customer_logindetails where customerId = " + str(user_id)
+    s = "select username from logindetails where Id = " + str(user_id) + " and type = 'customer'"
     cur.execute(s)
     u = cur.fetchall()[0][0]
 

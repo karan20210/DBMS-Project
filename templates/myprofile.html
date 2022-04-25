@@ -34,7 +34,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-cart-plus"></i> </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                               <p class = "dropdown-item">Cost: xyz</p>
-                              <a class="dropdown-item" href="#">Proceed to Checkout</a>
+                              <a class="dropdown-item" href="/cart/{{details[0]}}">Proceed to Checkout</a>
                             </div>
                           </li>
         
@@ -42,7 +42,7 @@
                             <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-user"></i> </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                               <a class="dropdown-item" href="#">My Profile</a>
-                              <a class="dropdown-item" href="#">My Orders</a>
+                              <a class="dropdown-item" href="/myorders/{{details[0]}}">My Orders</a>
                               <p class="dropdown-item"> Points: {{details[6]}}</p>
                               <a class="dropdown-item" href="/login">Logout</a>
                             </div>
