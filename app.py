@@ -498,12 +498,105 @@ def placeOrder(user_id):
 
     date = datetime.today().strftime('%Y-%m-%d')
 
+    # s = "Insert into orders values (%s, %s, %s, %s)"
+    # vals = (int(orderId), int(user_id), date, int(current_cartId))
+    # cur.execute(s,vals)
+    # mysql.connection.commit()
+
+    return render_template("orderPlaced.html", details = d, categories = cat, products = products_ordered, q = quantity_ordered, p = final_price, t = total, orderId = orderId, date = date)
+
+@app.route("/confirmorder/<user_id>")
+def orderConfirmed(user_id):
+    cur = mysql.connection.cursor()
+    d = getDetails(user_id)
+    cat = getAllCategories()
+
+    current_cartId = getCurrentCartId(user_id)
+    print("Current cart: ", current_cartId)
+    s = "create view my_carts as select * from cart where ccustomerid = " + str(user_id)
+    cur.execute(s)
+
+    s = "create view my_current_cart as select * from my_carts where cart_id = " + str(current_cartId)
+    cur.execute(s)
+
+    s = "select * from my_current_cart"
+    cur.execute(s)
+
+    c = cur.fetchall()
+    print(c)
+
+    products_ordered_id = []
+    for i in c:
+        products_ordered_id.append(i[2])
+    
+    products_ordered = []
+    for i in products_ordered_id:
+        s = "select * from products where product_id = " + str(i)
+        cur.execute(s)
+        products_ordered.append(cur.fetchall())
+    
+    quantity_ordered = []
+    for i in c:
+        quantity_ordered.append(i[3])
+    
+    final_price = []
+    total = 0
+    for i in range(len(c)):
+        final_price.append(round(quantity_ordered[i] * products_ordered[i][0][3], 2))
+        total += final_price[i]
+        
+    total = round(total, 2)
+
+    s = "drop view my_current_cart"
+    cur.execute(s)
+    s = "drop view my_carts"
+    cur.execute(s)
+
+    s = "select count(*) from orders"
+    cur.execute(s)
+    orderId = cur.fetchall()[0][0] + 1
+
+    date = datetime.today().strftime('%Y-%m-%d')
+
     s = "Insert into orders values (%s, %s, %s, %s)"
     vals = (int(orderId), int(user_id), date, int(current_cartId))
     cur.execute(s,vals)
     mysql.connection.commit()
 
-    return render_template("orderPlaced.html", details = d, categories = cat, products = products_ordered, q = quantity_ordered, p = final_price, t = total, orderId = orderId, date = date)
+    # Reduce quantity of products ordered, link payment to the order and assign this order to a delivery person and add it to deliveries table
+
+    return render_template("orderConfirmed.html", details = d, categories = cat, products = products_ordered, q = quantity_ordered, p = final_price, t = total, orderId = orderId, date = date)
+    
+@app.route("/myorders/<user_id>")
+def myOrders(user_id):
+    cur = mysql.connection.cursor()
+    d = getDetails(user_id)
+    cat = getAllCategories()
+
+    s = "create view my_orders as select * from orders where ocustomerid = " + str(user_id)
+    cur.execute(s)
+
+    s = "select * from my_orders"
+    cur.execute(s)
+    orders = []
+    for i in cur.fetchall():
+        print(i)
+        cart_id = i[3]
+        order_id = i[0]
+        no_of_products = getNumberOfProducts(user_id, cart_id)
+        order_date = i[2]
+
+        order = []
+        order.append(order_id)
+        order.append(no_of_products)
+        order.append(order_date)
+        
+        orders.append(order)
+
+    s = "drop view my_orders"
+    cur.execute(s)
+
+    return render_template("myorders.html", details = d, categories = cat, orders = orders)
 
 
 # Helper functions
@@ -629,6 +722,13 @@ def getCurrentCartId(user_id):
     cur.execute(s)
 
     return current_cartId
-    
+
+def getNumberOfProducts(user_id, cart_id):
+    cur = mysql.connection.cursor()
+
+    s = "select * from cart where cart_id = " + str(cart_id) + " and ccustomerid = " + str(user_id)
+    cur.execute(s)
+    return len(cur.fetchall())
+
 if(__name__ == "__main__"):
     app.run(debug = True)
