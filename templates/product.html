@@ -75,16 +75,23 @@
         <!-- Product Quantity -->
         <div class="product-price">
             <div class="mr-3">Quantity:</div> <br><br>
+            <form id = "selectquantity" action = "/{{details[0]}}/addtocart/{{product[0]}}" method="POST">
             <select id="quantity" name="quantity">
-                <option value="1" disabled selected hidden>1</option>
-            </select> <br>
+              {% for i in range(5) %}
+                <option value={{5 - i}} selected hidden>{{5-i}}</option>
+              {% endfor %}
+            </select>
+            <!-- <a href="/{{details[0]}}/addtocart/{{product[0]}}" class="cart-btn">Add to cart</a> -->
+            <input type="submit" class="button mt-3 cart-btn" value="Add to Cart">
+          </form>
+          <br>
         </div>
 
 
         <!-- Product Pricing -->
         <div class="product-price">
           <span>Rs. {{product[3]}}</span>
-          <a href="/{{details[0]}}/addtocart/{{product[0]}}" class="cart-btn">Add to cart</a>
+          <!-- <a href="/{{details[0]}}/addtocart/{{product[0]}}" class="cart-btn">Add to cart</a> -->
         </div>
         <br> <br>
         <div class = "seller-details">
@@ -114,7 +121,7 @@
                                                 <a href="#"><i class="icofont-ui-rating active"></i></a>
                                                 <a href="#"><i class="icofont-ui-rating"></i></a>
                                                 </span>
-                                            <h6 class="mb-1"><a class="text-black" href="/myprofile/{{users[i][0]}}">{{users[i][1]}}</a></h6>
+                                            <h6 class="mb-1">{{users[i][1]}}</h6>
                                             <p class="text-gray">{{reviews[i][5]}}</p>
                                         </div>
                                         <div class="reviews-members-body">

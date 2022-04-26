@@ -77,7 +77,7 @@
                       </div>
                       <div class="col-6 col-md"> 
                         <h6 class="text-charcoal mb-0 w-100">Payment Method</h6>
-                        <p class="text-pebble mb-0 w-100 mb-2 mb-md-0">COD</p> 
+                        <p class="text-pebble mb-0 w-100 mb-2 mb-md-0">{{payment_type}}</p> 
                       </div>
                       <div class="col-6 col-md"> 
                         <h6 class="text-charcoal mb-0 w-100">Shipped To</h6>
@@ -102,8 +102,8 @@
                         <div class="row no-gutters">
                           <div class="col-12 col-md-9 pr-0 pr-md-3">
                             <div class="alert p-2 alert-success w-100 mb-0">
-                              <h6 class="text-green mb-0"><b>Shipped</b></h6>
-                              <p class="text-green hidden-sm-down mb-0">Est. delivery between Aug 5 – Aug 9th, 2017</p>
+                              <h6 class="text-green mb-0"><b>{{delivery[2]}}</b></h6>
+                              <p class="text-green hidden-sm-down mb-0">Est. delivery: {{delivery[3]}}</p>
                             </div>
                           </div>
                           <div class="col-12 col-md-3">
@@ -116,7 +116,7 @@
                      
                             <div class="row align-items-center">
                               <div class="col-md-2">
-                                <img src={{products[i][0][8]}} class="img-fluid" alt="Generic placeholder image">
+                                <img src="../{{products[i][0][8]}}" class="img-fluid" alt="Generic placeholder image">
                               </div>
                               <div class="col-md-3 d-flex justify-content-center">
                                 <div>

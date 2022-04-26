@@ -103,8 +103,8 @@
                                                         <h6>CVV <i class="fa fa-question-circle d-inline"></i></h6>
                                                     </label> <input type="text" required class="form-control"> </div>
                                             </div>
-                                        </div>
-                                        <div class="card-footer"> <button type="button" class="subscribe btn btn-block shadow-sm"> <a href = "/placeorder/{{details[0]}}" style="color: white;"> Confirm Payment </a> </button>
+                                        </div>                                
+                                        <div class="card-footer"> <button type="button" class="subscribe btn btn-block shadow-sm"> <a href = "/placeorder/{{details[0]}}/card" style="color: white;"> Confirm Payment </a> </button>
                                     </form>
                                 </div>
                             </div> <!-- End -->
@@ -116,7 +116,7 @@
                                         <div class="form-group"> <label for="upi-id">
                                             <h6>UPI ID</h6>
                                             </label> <input type="text" name="upi-id" placeholder="UPI ID" required class="form-control "> </div>
-                                            <div class="card-footer"> <button type="button" class="subscribe btn btn-block shadow-sm"> Verify </button>
+                                            <div class="card-footer"> <button type="button" class="subscribe btn btn-block shadow-sm"> <a href = "/placeorder/{{details[0]}}/upi" style="color: white;">Verify </a></button>
                                         </form>
                                 </div>
                             </div><!-- End -->
@@ -125,7 +125,7 @@
                             <div id="cod" class="tab-pane fade pt-3">
                                 <div id="upi" class="tab-pane fade show active pt-3">
                                 <h6 class="pb-2">Please keep the required change in hand when the order arrives.</h6>
-                                <div class="card-footer"> <button type="button" class="subscribe btn btn-block shadow-sm"> OK </button>
+                                <div class="card-footer"> <button type="button" class="subscribe btn btn-block shadow-sm"> <a href = "/placeorder/{{details[0]}}/cod" style="color: white;">OK </a></button>
                                 </div>
                                 </div>
                             </div><!-- End -->
@@ -134,7 +134,7 @@
                             <div id="points" class="tab-pane fade pt-3">
                                 <div id="upi" class="tab-pane fade show active pt-3"></div>
                                     <h6 class="pb-2">You have 423 points!</h6>
-                                    <div class="card-footer"> <button type="button" class="subscribe btn btn-block shadow-sm"> Pay by points </button></div>
+                                    <div class="card-footer"> <button type="button" class="subscribe btn btn-block shadow-sm"> <a href = "/placeorder/{{details[0]}}/points" style="color: white;">Pay by points </a></button></div>
                                 </div>
                             </div> <!-- End -->
                             <!-- End -->

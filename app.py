@@ -173,15 +173,15 @@ def homepage(user_id):
     s = "select * from products"
     cur.execute(s)
     p = cur.fetchall()
-    ps = []
-    print(len(p))
-    for i in range(3):
-        no = random.randint(0, len(p) - 1)
-        ps.append(p[no])   
+    # ps = []
+    # print(len(p))
+    # for i in range(3):
+    #     no = random.randint(0, len(p) - 1)
+    #     ps.append(p[no])   
     
     cart_price = getCurrentCartPrice(user_id)
 
-    return render_template('homepage.html', details = d, categories = c, products = ps, cart_price = cart_price)
+    return render_template('homepage.html', details = d, categories = c, products = p, cart_price = cart_price)
 
 @app.route("/sellerhomepage/<seller_id>")
 def sellerhomepage(seller_id):
@@ -352,9 +352,13 @@ def productPage(user_id, product_id):
     seller = cur.fetchall()[0]
     return render_template("product.html", details = d, product = p, category = c, reviews = r, average = avg_stars, users = review_users, categories = categories, seller = seller)
 
-@app.route("/<user_id>/addtocart/<product_id>")
+@app.route("/<user_id>/addtocart/<product_id>", methods = ['GET', 'POST'])
 def addToCart(user_id, product_id):
     cur = mysql.connection.cursor()
+    q = request.form
+    quantity = 1
+    for i in q:
+        quantity = request.form[i]
 
     s = "create view my_carts as select * from cart where ccustomerid = " + str(user_id)
     cur.execute(s)
@@ -380,11 +384,11 @@ def addToCart(user_id, product_id):
     cur.execute(s)
     if(len(cur.fetchall()) == 0):
         s = "Insert into cart values (%s, %s, %s, %s)"
-        vals = (int(current_cartId), int(user_id), int(product_id), int(1))
+        vals = (int(current_cartId), int(user_id), int(product_id), int(quantity))
         cur.execute(s, vals)
         mysql.connection.commit()
     else:
-        s = "UPDATE my_current_cart SET quantity_ordered = quantity_ordered + 1 where product_id = " + str(product_id)
+        s = "UPDATE my_current_cart SET quantity_ordered = quantity_ordered + " + str(quantity) + " where product_id = " + str(product_id)
         cur.execute(s)
         mysql.connection.commit()
 
@@ -462,8 +466,8 @@ def checkout(user_id):
     price = getCurrentCartPrice(user_id)
     return render_template('checkout.html', details = d, categories = c, t = price)
 
-@app.route("/placeorder/<user_id>")
-def placeOrder(user_id):
+@app.route("/placeorder/<user_id>/<payment_type>")
+def placeOrder(user_id, payment_type):
     cur = mysql.connection.cursor()
     d = getDetails(user_id)
     cat = getAllCategories()
@@ -514,15 +518,12 @@ def placeOrder(user_id):
 
     date = datetime.today().strftime('%Y-%m-%d')
 
-    # s = "Insert into orders values (%s, %s, %s, %s)"
-    # vals = (int(orderId), int(user_id), date, int(current_cartId))
-    # cur.execute(s,vals)
-    # mysql.connection.commit()
+    payment_type = payment_type.capitalize()
 
-    return render_template("orderPlaced.html", details = d, categories = cat, products = products_ordered, q = quantity_ordered, p = final_price, t = total, orderId = orderId, date = date)
+    return render_template("orderPlaced.html", details = d, categories = cat, products = products_ordered, q = quantity_ordered, p = final_price, t = total, orderId = orderId, date = date, payment_type = payment_type)
 
-@app.route("/confirmorder/<user_id>")
-def orderConfirmed(user_id):
+@app.route("/confirmorder/<user_id>/<payment_type>")
+def orderConfirmed(user_id, payment_type):
     cur = mysql.connection.cursor()
     d = getDetails(user_id)
     cat = getAllCategories()
@@ -579,9 +580,25 @@ def orderConfirmed(user_id):
     cur.execute(s,vals)
     mysql.connection.commit()
 
+    s = "select count(*) from payment"
+    cur.execute(s)
+    paymentId = cur.fetchall()[0][0] + 1
+
+    type = payment_type
+    status = "SUCCESSFUL"
+    
+    s = "Insert into payment values (%s, %s, %s, %s, %s, %s)"
+    vals = (int(paymentId), int(orderId), type, status, date, float(total))
+    cur.execute(s, vals)
+    mysql.connection.commit()
+
+    s = "select * from deliveries where order_id = " + str(orderId)
+    cur.execute(s)
+    delivery = cur.fetchall()[0]
+
     # Reduce quantity of products ordered, link payment to the order and assign this order to a delivery person and add it to deliveries table
 
-    return render_template("orderConfirmed.html", details = d, categories = cat, products = products_ordered, q = quantity_ordered, p = final_price, t = total, orderId = orderId, date = date)
+    return render_template("orderConfirmed.html", details = d, categories = cat, products = products_ordered, q = quantity_ordered, p = final_price, t = total, orderId = orderId, date = date, delivery = delivery, payment_type = type)
     
 @app.route("/myorders/<user_id>")
 def myOrders(user_id):
@@ -666,7 +683,15 @@ def orderInfo(order_id, user_id):
 
     date = datetime.today().strftime('%Y-%m-%d')
 
-    return render_template("orderConfirmed.html", details = d, categories = cat, products = products_ordered, q = quantity_ordered, p = final_price, t = total, orderId = order_id, date = date)
+    s = "select * from deliveries where order_id = " + str(order_id)
+    cur.execute(s)
+    delivery = cur.fetchall()[0]
+
+    s = "select type from payment where orderid = " + str(order_id)
+    cur.execute(s)
+    type = cur.fetchall()[0][0]
+
+    return render_template("orderConfirmed.html", details = d, categories = cat, products = products_ordered, q = quantity_ordered, p = final_price, t = total, orderId = order_id, date = date, delivery = delivery, payment_type = type)
 
 
 @app.route("/<user_id>/addreview/<product_id>")
@@ -728,7 +753,6 @@ def getAllCategories():
     return cur.fetchall()
 
 def ifCartOrdered(user_id, cart_id):
-    print("Hi")
     cur = mysql.connection.cursor()
     s = "select * from orders where OCustomerID = " + str(user_id) + " and Cart_ID = " + str(cart_id)
     cur.execute(s)
