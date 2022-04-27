@@ -1,5 +1,5 @@
 from crypt import methods
-from datetime import datetime
+from datetime import date, datetime
 import random
 from unicodedata import category
 from django.shortcuts import render
@@ -734,9 +734,17 @@ def track(user_id, order_id):
     s = "select * from delivery_person where dp_id = " + str(dp_id)
     cur.execute(s)
     dp = cur.fetchall()[0]
-    print(dp)
-
     order_status = delivery[2]
+
+    dod = delivery[3]
+    cur_date= date.today()
+    days_till_recieving = (dod-cur_date).days
+    if(days_till_recieving <= 0):
+        order_status = "Delivered"
+        s = "update deliveries set order_status = 'Delivered' where order_id = " + str(order_id)
+        cur.execute(s)
+        mysql.connection.commit()
+    
     os = 0
     if(order_status == "On the way"):
         os = 1
