@@ -141,5 +141,8 @@ CREATE TABLE `LoginDetails` (
     primary key(Type, ID)
 );
 
+create index product_name on Products(Name);
+create index product_price on Products(Price);
+
 
 show tables;
