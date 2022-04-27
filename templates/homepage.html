@@ -24,7 +24,7 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                       {% for i in categories %}
-                        <a class = "dropdown-item" href = "#"> {{i[1]}} </a>
+                        <a class = "dropdown-item" href = "/category/{{i[0]}}/{{details[0]}}"> {{i[1]}} </a>
                       {% endfor %}
                     </div>
                 </li>
@@ -92,6 +92,8 @@
                                     <div class="card-body row" align = "center" >
                                         <h4 class="col-10 card-title"><a href = "/{{details[0]}}/products/{{i[0]}}" style="color: black;">{{i[2]}}</a></h4>
                                         <a class="col-2 btn btn-success my-auto text-light" href = "/{{details[0]}}/addtocart/{{i[0]}}"> <i class="fas fa-cart-plus"> </i></a>
+                                        <h6 class="col-10 card-title">Rs. {{i[3]}}</h4>
+                                        
                                     </div>
                                 </div>
                             </div>

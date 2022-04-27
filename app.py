@@ -753,6 +753,81 @@ def track(user_id, order_id):
 
     return render_template("trackOrder.html", details = d, cart_price = cart_price, categories = c, order_id = order_id, delivery = delivery, dp = dp, os = os)
 
+@app.route("/category/<category_id>/<user_id>")
+def categoryPage(category_id, user_id):
+    d = getDetails(user_id)
+    categories = getAllCategories()
+    
+    cur = mysql.connection.cursor()
+    s = "select * from products where category_id = " + str(category_id)
+    cur.execute(s)
+    products = cur.fetchall()
+
+    s = "select * from categories where category_id = " + str(category_id)
+    cur.execute(s)
+    category = cur.fetchall()
+
+    return render_template("category.html", details = d, categories = categories, products = products, category = category)
+
+@app.route("/<category_id>/<user_id>/lowtohigh")
+def categoryPageLowToHigh(category_id, user_id):
+    d = getDetails(user_id)
+    categories = getAllCategories()
+    
+    cur = mysql.connection.cursor()
+    s = "select * from products where category_id = " + str(category_id) + " order by price"
+    cur.execute(s)
+    products = cur.fetchall()
+
+    s = "select * from categories where category_id = " + str(category_id)
+    cur.execute(s)
+    category = cur.fetchall()
+
+    return render_template("category.html", details = d, categories = categories, products = products, category = category)
+
+@app.route("/<category_id>/<user_id>/hightolow")
+def categoryPageHightoLow(category_id, user_id):
+    d = getDetails(user_id)
+    categories = getAllCategories()
+    
+    cur = mysql.connection.cursor()
+    s = "select * from products where category_id = " + str(category_id) + " order by price desc"
+    cur.execute(s)
+    products = cur.fetchall()
+
+    s = "select * from categories where category_id = " + str(category_id)
+    cur.execute(s)
+    category = cur.fetchall()
+
+    return render_template("category.html", details = d, categories = categories, products = products, category = category)
+
+@app.route("/<category_id>/<user_id>/<stars>")
+def categoryPageStars(category_id, user_id, stars):
+    d = getDetails(user_id)
+    categories = getAllCategories()
+    
+    cur = mysql.connection.cursor()
+    # s = "select * from products where category_id = " + str(category_id)
+    # cur.execute(s)
+    # products = cur.fetchall()
+
+    s = "select p.product_id, avg(stars) as average from products p inner join reviews r on p.product_id = r.product_id and p.category_id = " + str(category_id) + " group by product_id having average > " + str(stars)
+    cur.execute(s)
+    
+    products = []
+    for i in cur.fetchall():
+        pid = i[0]
+        s = "select * from products where product_id = " + str(pid)
+        cur.execute(s)
+        products.append(cur.fetchall()[0])
+
+
+    s = "select * from categories where category_id = " + str(category_id)
+    cur.execute(s)
+    category = cur.fetchall()
+
+    return render_template("category.html", details = d, categories = categories, products = products, category = category)
+
 # Helper functions
 def getDetails(user_id):
     cur = mysql.connection.cursor()
