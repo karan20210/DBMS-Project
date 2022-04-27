@@ -719,7 +719,31 @@ def newReview(user_id, product_id):
     l = "/" + str(user_id) + "/addreview/" + str(product_id)
     return redirect(l)
 
+@app.route("/track/<user_id>/<order_id>")
+def track(user_id, order_id):
+    d = getDetails(user_id)
+    cart_price = getCurrentCartPrice(user_id)
+    c = getAllCategories()
 
+    cur = mysql.connection.cursor()
+    s = "select * from deliveries where order_id = " + str(order_id)
+    cur.execute(s)
+    delivery = cur.fetchall()[0]
+
+    dp_id = delivery[1]
+    s = "select * from delivery_person where dp_id = " + str(dp_id)
+    cur.execute(s)
+    dp = cur.fetchall()[0]
+    print(dp)
+
+    order_status = delivery[2]
+    os = 0
+    if(order_status == "On the way"):
+        os = 1
+    if(order_status == "Delivered"):
+        os = 2
+
+    return render_template("trackOrder.html", details = d, cart_price = cart_price, categories = c, order_id = order_id, delivery = delivery, dp = dp, os = os)
 
 # Helper functions
 def getDetails(user_id):
