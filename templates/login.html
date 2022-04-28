@@ -30,8 +30,6 @@
             <div class="tabs">
               <h3 class="customer-tab"><a class="active" href="#customer-tab-content">Customer</a></h3>
               <h3 class="seller-tab"><a href="#seller-tab-content">Seller</a></h3>
-              <h3 class="manager-tab"><a href="#manager-tab-content">Manager</a></h3>
-              <h3 class="CC-tab" id ="small"><a href="#CC-tab-content">CC</a></h3>
               <h3 class="DP-tab" id ="small"><a href="#DP-tab-content">Delivery</a></h3>
             </div><!--.tabs-->
         
@@ -52,28 +50,6 @@
                   <input type="text" class="input" id="user_login" autocomplete="off" placeholder="Username" name = "username">
                   <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password" name = "password">
                   <input type="submit" class="button" value="Login as Seller">
-                </form><!--.seller-form-->
-                <div class="help-text">
-                  <p><a href = {{ url_for('signup') }}>Don't have an account? Sign Up</a></p>
-                </div><!--.help-text-->
-              </div><!--.seller-tab-content-->
-
-              <div id="manager-tab-content">
-                <form class="manager-form" action="/managerlogin" method="post">
-                  <input type="text" class="input" id="user_login" autocomplete="off" placeholder="Username" name = "username">
-                  <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password" name = "password">
-                  <input type="submit" class="button" value="Login as Manager">
-                </form><!--.manager-form-->
-                <div class="help-text">
-                  <p><a href = {{ url_for('signup') }}>Don't have an account? Sign Up</a></p>
-                </div><!--.help-text-->
-              </div><!--.manager-tab-content-->
-
-              <div id="CC-tab-content">
-                <form class="CC-form" action="/cclogin" method="post">
-                  <input type="text" class="input" id="user_login" autocomplete="off" placeholder="Username" name = "username">
-                  <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password" name = "password">
-                  <input type="submit" class="button" value="Login as Customer Care">
                 </form><!--.seller-form-->
                 <div class="help-text">
                   <p><a href = {{ url_for('signup') }}>Don't have an account? Sign Up</a></p>
