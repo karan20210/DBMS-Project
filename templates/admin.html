@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <!-- ======= Styles ====== -->
+    <link rel="stylesheet" href="../static/css/admin.css">
+</head>
+
+<body>
+            <!-- ======================= Cards ================== -->
+            <div class="cardBox">
+                <div class="card">
+                    <div>
+                        <div class="numbers">{{customers}}</div>
+                        <div class="cardName">Customers</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="person-outline"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="numbers">{{sellers}}</div>
+                        <div class="cardName">Sellers</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="person-outline"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="numbers">{{orders}}</div>
+                        <div class="cardName">Orders</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="cart-outline"></ion-icon>
+                    </div>
+                </div>             
+
+                <div class="card">
+                    <div>
+                        <div class="numbers" style="font-size: 25px;">Rs. {{earned}}</div>
+                        <div class="cardName">Earning</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="cash-outline"></ion-icon>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================ Order Details List ================= -->
+            <div class="details">
+                <div class="recentOrders">
+                    <div class="cardHeader">
+                        <h2>Product Revenue</h2>            
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>Product</td>
+                                <td>Revenue</td>  
+                                <td>Quantity sold</td>                              
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for i in range(pwm | length) %}
+                            <tr>
+                                <td>{{pwm[i][1]}}</td>
+                                <td>Rs. {{pwm[i][2]}}</td>    
+                                <td>{{pwm[i][3]}}</td>                        
+                            </tr>        
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- ================= New Customers ================ -->
+                <div class="recentCustomers">
+                    <div class="cardHeader">
+                        <h2>Best Customers</h2>
+                    </div>
+
+                    <table>
+                        {% for i in range(ci | length) %}
+                        <tr>                            
+                            <td>
+                                <h4>{{ci[i][0]}} <br> <span>Rs. {{ci[i][1]}}</span></h4>
+                            </td>
+                        </tr>    
+                        {% endfor %}                
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section>
+        <div class="rt-container">
+              <div class="col-rt-12">
+                  <div class="Scriptcontent">
+    <!-- partial:index.partial.html -->
+    <br>
+    <h2 style="text-align: center;">Payment Methods</h2>
+    <div class="wrapper">
+      <div class="d1"><div><span>{{ptp[0]}} Card</span></div></div>
+      <div class="d2"><div><span>{{ptp[1]}} UPI </span></div></div>
+      <div class="d3"><div><span>{{ptp[2]}} COD</span></div></div>
+      <div class="d4"><div><span>{{ptp[3]}} Points</span></div></div>
+    </div>
+
+    <!-- partial -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========== Scripts =========  -->
+    <script src="../static/js/admin.js"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

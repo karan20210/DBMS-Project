@@ -1009,7 +1009,7 @@ def dp_returns(dp_id):
         user_details.append(i)
     print(user_details)
     
-    return render_template("dphomepage.html", name = name, dates = dates, user_details = user_details, dp_id = dp_id, orders = order_ids)
+    return render_template("dpreturns.html", name = name, dates = dates, user_details = user_details, dp_id = dp_id, orders = order_ids)
 
 @app.route("/deliveryhistory/<dp_id>")
 def deliveryhistory(dp_id):
@@ -1092,6 +1092,53 @@ def return_item(order_id, user_id):
     mysql.connection.commit()
     return "Returned"
 
+@app.route("/admin")
+def admin():
+    cur = mysql.connection.cursor()
+
+    s = "select count(*) from customer"
+    cur.execute(s)
+    customers = cur.fetchall()[0][0]
+
+    s = "select count(*) from seller"
+    cur.execute(s)
+    sellers = cur.fetchall()[0][0]
+
+    s = "select count(*) from orders"
+    cur.execute(s)
+    orders = cur.fetchall()[0][0]
+
+    s = "select sum(amount) from payment"
+    cur.execute(s)
+    earned = cur.fetchall()[0][0]
+    earned = int(earned)
+
+    s = "select p.product_id, p.name, sum(c.quantity_ordered * p.price) as total, sum(c.quantity_ordered) from cart c inner join products p on c.product_id = p.product_id where c.cart_id in (select cart_id from orders) and c.ccustomerid in (select ocustomerid from orders o where o.cart_id = c.cart_id) group by c.product_id order by total desc;"
+    cur.execute(s)
+    product_wise_money = cur.fetchall()
+
+    s = "select c.name, sum(p.Amount) from payment p, customer c where c.customer_id in (select o.ocustomerid from orders o where p.orderid = o.order_id) group by c.name"
+    cur.execute(s)
+    customer_info = cur.fetchall()
+
+    s = "Select type, SUM(Amount) from payment group by type"
+    cur.execute(s)
+    payment_info = cur.fetchall()
+    
+    payment_type_percentage = []
+    cnt = 0
+    for i in payment_info:
+        payment_type_percentage.append(int(i[1])/int(earned) * 100)
+        cnt+=1
+    
+    for i in range(4-cnt):
+        payment_type_percentage.append(0)
+    
+    payment_info = {'Card': payment_type_percentage[0], 'UPI': payment_type_percentage[1], 'COD': payment_type_percentage[2], 'Points': payment_type_percentage[3]}
+    print(payment_info)
+    
+
+    return render_template("admin.html", customers = customers, orders = orders, sellers = sellers, earned = earned, pwm = product_wise_money, ci = customer_info, ptp = payment_type_percentage, data = payment_info)
 
 # Helper functions
 def getDetails(user_id):
