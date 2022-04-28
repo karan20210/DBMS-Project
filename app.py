@@ -7,6 +7,7 @@ from flask import Flask, redirect, render_template, request
 from flask_mysqldb import MySQL
 import yaml
 import os
+import MySQLdb
 
 app = Flask(__name__)
 
@@ -18,6 +19,8 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root' 
 app.config['MYSQL_PASSWORD'] = 'karanb1809'
 app.config['MYSQL_DB'] = 'PROJECT'
+
+host = 'localhost'
 
 mysql = MySQL(app)
 
@@ -157,6 +160,12 @@ def sellerSignup():
     vals = (username, pwd, 'seller', int(sellerID))
     cur.execute(s, vals)
 
+    s = "CREATE USER '" + username + "'@'" + host + "' IDENTIFIED BY '" + pwd + "'"
+    cur.execute(s)
+
+    s = "GRANT SELECT ON seller to '" + username + "'@'localhost'"
+    cur.execute(s)
+    
     mysql.connection.commit()
     cur.close()
     return render_template('login.html')
@@ -173,11 +182,6 @@ def homepage(user_id):
     s = "select * from products"
     cur.execute(s)
     p = cur.fetchall()
-    # ps = []
-    # print(len(p))
-    # for i in range(3):
-    #     no = random.randint(0, len(p) - 1)
-    #     ps.append(p[no])   
     
     cart_price = getCurrentCartPrice(user_id)
 
@@ -194,8 +198,35 @@ def sellerhomepage(seller_id):
     cur.execute(s)
     p = cur.fetchall()
 
+    s = "select * from logindetails where type = 'seller' and id = " + str(seller_id)
+    cur.execute(s)
+    current_seller = cur.fetchall()[0]
+    username = current_seller[0]
+    pwd = current_seller[1]
+
     mysql.connection.commit()
-    cur.close()
+
+    host = 'localhost'
+    user = username
+    passwd = pwd
+    db = 'project'
+
+    mysql_seller = MySQLdb.connect(host, user, passwd, db)
+    seller_cursor = mysql_seller.cursor()
+
+    s = "SELECT TABLE_SCHEMA,TABLE_NAME FROM INFORMATION_SCHEMA.VIEWS where TABLE_SCHEMA = 'PROJECT' AND TABLE_NAME = 'my_orders_info'"
+    cur.execute(s)
+    if(len(cur.fetchall()) == 0):
+        s = "create view my_orders_info as select s.seller_id, s.name as seller_name, p.name as product_name, p.price, c.quantity_ordered from seller s inner join products p on s.seller_id = p.seller_id inner join cart c on c.product_id = p.product_id and c.cart_id in (select cart_id from orders) where s.seller_id = " + str(seller_id);
+        cur.execute(s)
+
+    s = "GRANT SELECT ON my_orders_info TO '" + username + "'@'localhost'"
+    cur.execute(s)
+
+    si = "select * from my_orders_info"
+    seller_cursor.execute(si)
+    print(seller_cursor.fetchall())
+
 
     return render_template('sellerhomepage.html', details = d, products = p)
 
