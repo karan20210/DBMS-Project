@@ -1,4 +1,4 @@
-from crypt import methods
+# from crypt import methods
 from datetime import date, datetime
 import random
 from unicodedata import category
@@ -17,7 +17,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root' 
-app.config['MYSQL_PASSWORD'] = 'karanb1809'
+app.config['MYSQL_PASSWORD'] = 'Khwai0902'
 app.config['MYSQL_DB'] = 'PROJECT'
 
 host = 'localhost'

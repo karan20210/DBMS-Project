@@ -21,7 +21,7 @@
                     <a class="nav-link active" href="/sellerhomepage/{{details[0]}}" >Home <span class="sr-only">(current)</span></a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/sellerOrderInfo/{{details[0]}}" >Order Info <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#" >Delivery History <span class="sr-only">(current)</span></a>
                   </li>
                   <li>
                      <a class="nav-link" href="/login" style="float: right;">Logout</a>
@@ -33,15 +33,12 @@
 
           <br>
 
-        <section class="vh-100" style="background-color: white;">
+          <section class="vh-100" style="background-color: white;">
             <div class="container h-100">
               <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col">
                     <div class="d-flex">
-                        <p><span class="h2">Your products </span>
-                        <span class="float-right ml-2">
-                            <button type="button" class="btn btn-success align-end btn-md me-2 border-dark rounded-circle"><a href = "/addproducts/{{details[0]}}"><i class="fa fa-plus"></i> </a> </button>
-                        </span>
+                        <p><span class="h2">Current Deliveries </span>
                         </div>
 
                         {% for i in products %}
@@ -49,25 +46,23 @@
                                 <div class="card-body p-4">
                         
                                     <div class="row align-items-center">
-                                        <div class="col-md-2">
-                                        <img src={{i[8]}} class="img-fluid" alt="Generic placeholder image">
-                                        </div>
-                                        <div class="col-md-3 d-flex justify-content-center">
+                                        <div class="col-md-4 d-flex justify-content-center">
                                         <div>
-                                            <p class="small text-muted mb-4 pb-2">Name</p>
-                                            <p class="lead fw-normal mb-0">{{i[2]}}</p>
+                                            <p class="small text-muted mb-4 pb-2">Customer ID</p>
+                                            <p class="lead fw-normal mb-0">12345</p>
                                         </div>
                                         </div>
-                                        <div class="col-md-3 d-flex justify-content-center">
+                                        <div class="col-md-4 d-flex justify-content-center">
                                         <div>
-                                            <p class="small text-muted mb-4 pb-2">Quantity Remaining</p>
-                                            <p class="lead fw-normal mb-0">{{i[4]}}</p>
+                                            <p class="small text-muted mb-4 pb-2">Customer Address</p>
+                                            <p class="lead fw-normal mb-0">htgs ueiphs hvsuqnio</p>
                                         </div>
                                         </div>
-                                        <div class="col-md-2 d-flex justify-content-center">
+                                        <div class="col-md-4 d-flex justify-content-center">
                                         <div>
-                                            <p class="small text-muted mb-4 pb-2">Price</p>
-                                            <p class="lead fw-normal mb-0">Rs. {{i[3]}}</p>
+                                            <p class="small text-muted mb-4 pb-2">Date of Delivery</p>
+                                            <p class="lead fw-normal mb-0">22-04-2002</p>
+                                            </p>
                                         </div>
                                         </div>
                                         <div class="col-md-2 d-flex justify-content-center">
