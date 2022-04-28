@@ -18,7 +18,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root' 
-app.config['MYSQL_PASSWORD'] = 'Khwai0902'
+app.config['MYSQL_PASSWORD'] = 'karanb1809'
 app.config['MYSQL_DB'] = 'PROJECT'
 
 host = 'localhost'
@@ -326,7 +326,9 @@ def myprofile(user_id):
     cur.execute(s)
     c = cur.fetchall()
 
-    return render_template("myprofile.html", details = d, username = u, categories = c)
+    cart_price = getCurrentCartPrice(user_id)
+
+    return render_template("myprofile.html", details = d, username = u, categories = c, cart_price = cart_price)
 
 @app.route("/cart/<user_id>")
 def cart(user_id):
@@ -425,7 +427,9 @@ def productPage(user_id, product_id):
     s = "select * from seller where seller_id = "  + str(seller_id)
     cur.execute(s)
     seller = cur.fetchall()[0]
-    return render_template("product.html", details = d, product = p, category = c, reviews = r, average = avg_stars, users = review_users, categories = categories, seller = seller)
+
+    cart_price = getCurrentCartPrice(user_id)
+    return render_template("product.html", details = d, product = p, category = c, reviews = r, average = avg_stars, users = review_users, categories = categories, seller = seller, cart_price = cart_price)
 
 @app.route("/<user_id>/addtocart/<product_id>", methods = ['GET', 'POST'])
 def addToCart(user_id, product_id):
@@ -707,7 +711,9 @@ def myOrders(user_id):
     s = "drop view my_orders"
     cur.execute(s)
 
-    return render_template("myorders.html", details = d, categories = cat, orders = orders)
+    cart_price = getCurrentCartPrice(user_id)
+
+    return render_template("myorders.html", details = d, categories = cat, orders = orders, cart_price = cart_price)
 
 @app.route("/orderinfo/<order_id>/<user_id>")
 def orderInfo(order_id, user_id):
@@ -845,7 +851,8 @@ def categoryPage(category_id, user_id):
     cur.execute(s)
     category = cur.fetchall()
 
-    return render_template("category.html", details = d, categories = categories, products = products, category = category)
+    cart_price = getCurrentCartPrice(user_id)
+    return render_template("category.html", details = d, categories = categories, products = products, category = category, cart_price = cart_price)
 
 @app.route("/<category_id>/<user_id>/lowtohigh")
 def categoryPageLowToHigh(category_id, user_id):
@@ -929,8 +936,6 @@ def dp_homepage(dp_id):
     mysql_seller = MySQLdb.connect(host, user, passwd, db)
     dp_cursor = mysql_seller.cursor()
 
-    s = "GRANT"
-
     dates = []
     order_ids = []
     s = "select * from deliveries d where d.order_status = 'On the Way' and d.dp_id = " + str(dp_id)
@@ -955,6 +960,55 @@ def dp_homepage(dp_id):
         user_details.append(i)
     
 
+    return render_template("dphomepage.html", name = name, dates = dates, user_details = user_details, dp_id = dp_id, orders = order_ids)
+
+@app.route("/dpreturns/<dp_id>")
+def dp_returns(dp_id):
+    cur = mysql.connection.cursor()
+    s = "select name from delivery_person where dp_id = " + str(dp_id)
+    cur.execute(s)
+    name = cur.fetchall()[0][0]
+
+    s = "select * from logindetails where type = 'dp' and id = " + str(dp_id)
+    cur.execute(s)
+    current_seller = cur.fetchall()[0]
+    username = current_seller[0]
+    pwd = current_seller[1]
+
+    mysql.connection.commit()
+
+    host = 'localhost'
+    user = username
+    passwd = pwd
+    db = 'project'
+
+    mysql_seller = MySQLdb.connect(host, user, passwd, db)
+    dp_cursor = mysql_seller.cursor()
+
+    dates = []
+    order_ids = []
+    s = "select * from returns r where r.dp_id = " + str(dp_id)
+    cur.execute(s)
+    for i in cur.fetchall():
+        dates.append(i[3])
+        order_ids.append(i[0])
+    
+    user_details = []
+    s = "SELECT TABLE_SCHEMA,TABLE_NAME FROM INFORMATION_SCHEMA.VIEWS where TABLE_SCHEMA = 'PROJECT' AND TABLE_NAME = 'dp_pending_returns" + str(dp_id) + "'"
+    cur.execute(s)
+    if(len(cur.fetchall()) == 0):
+        s = "create view dp_pending_returns" + str(dp_id) + " as select customer_id, address from customer where customer_id in (select ocustomerid from orders o where o.order_id in (select order_id from returns r where r.dp_id = " + str(dp_id) + "))"
+        cur.execute(s)
+
+    s = "GRANT SELECT ON dp_pending_returns" + str(dp_id) + " TO '" + username + "'@'localhost'"
+    cur.execute(s)
+
+    s = "select * from dp_pending_returns" + str(dp_id)
+    dp_cursor.execute(s)
+    for i in dp_cursor.fetchall():
+        user_details.append(i)
+    print(user_details)
+    
     return render_template("dphomepage.html", name = name, dates = dates, user_details = user_details, dp_id = dp_id, orders = order_ids)
 
 @app.route("/deliveryhistory/<dp_id>")

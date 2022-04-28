@@ -11,46 +11,46 @@
         <div class="container">
             <div class="main-body">
         
-                <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #292fa3;">
-                    <div class="container">
-                      <a class="navbar-brand" href="#">Welcome, {{details[1]}}</a>
-                      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                      <span class="navbar-toggler-icon"></span>
-                      </button>
-                      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ml-auto">
-                          <li class="nav-item">
-                            <a class="nav-link " href="/homepage/{{details[0]}}" >Home <span class="sr-only">(current)</span></a>
-                          </li>
-                          <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              {% for i in categories %}
-                                <a class = "dropdown-item" href = "#"> {{i[1]}} </a>
-                              {% endfor %}
-                            </div>
-                        </li>
-                          <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-cart-plus"></i> </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <p class = "dropdown-item">Cost: xyz</p>
-                              <a class="dropdown-item" href="/cart/{{details[0]}}">Proceed to Checkout</a>
-                            </div>
-                          </li>
-        
-                          <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-user"></i> </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <a class="dropdown-item" href="#">My Profile</a>
-                              <a class="dropdown-item" href="/myorders/{{details[0]}}">My Orders</a>
-                              <p class="dropdown-item"> Points: {{details[6]}}</p>
-                              <a class="dropdown-item" href="/login">Logout</a>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </nav>
+              <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #292fa3;">
+                <div class="container">
+                  <a class="navbar-brand" href="#">Welcome, {{details[1]}}</a>
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+                      <li class="nav-item">
+                        <a class="nav-link" href="/homepage/{{details[0]}}" >Home <span class="sr-only">(current)</span></a>
+                      </li>
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          {% for i in categories %}
+                          <a class = "dropdown-item" href = "/category/{{i[0]}}/{{details[0]}}"> {{i[1]}} </a>
+                          {% endfor %}
+                        </div>
+                    </li>
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-cart-plus"></i> </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <p class = "dropdown-item">Cost: Rs. {{cart_price}}</p>
+                          <a class="dropdown-item" href="/cart/{{details[0]}}">Proceed to Checkout</a>
+                        </div>
+                      </li>
+    
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-user"></i> </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <a class="dropdown-item" href="/myprofile/{{details[0]}}">My Profile</a>
+                          <a class="dropdown-item" href="/myorders/{{details[0]}}">My Orders</a>
+                          <p class="dropdown-item"> Points: {{details[6]}}</p>
+                          <a class="dropdown-item" href="/login">Logout</a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </nav>
             
                   <br>
 
