@@ -11,17 +11,17 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #292fa3;">
             <div class="container">
-              <a class="navbar-brand" href="#">Welcome, {{details[1]}}</a>
+              <a class="navbar-brand" href="#">Welcome, {{name}}</a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                   <li class="nav-item">
-                    <a class="nav-link active" href="/sellerhomepage/{{details[0]}}" >Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link active" href="#" >Home <span class="sr-only">(current)</span></a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#" >Delivery History <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/deliveryhistory/{{dp_id}}" >Delivery History <span class="sr-only">(current)</span></a>
                   </li>
                   <li>
                      <a class="nav-link" href="/login" style="float: right;">Logout</a>
@@ -41,27 +41,33 @@
                         <p><span class="h2">Current Deliveries </span>
                         </div>
 
-                        {% for i in products %}
+                        {% for i in range(dates | length) %}
                             <div class="card mb-4 border-dark">
                                 <div class="card-body p-4">
                         
                                     <div class="row align-items-center">
-                                        <div class="col-md-4 d-flex justify-content-center">
+                                        <div class="col-md-3 d-flex justify-content-center">
+                                            <div>
+                                                <p class="small text-muted mb-4 pb-1">Order ID</p>
+                                                <p class="lead fw-normal mb-0">{{orders[i]}}</p>
+                                            </div>
+                                            </div>
+                                        <div class="col-md-3 d-flex justify-content-center">
                                         <div>
                                             <p class="small text-muted mb-4 pb-2">Customer ID</p>
-                                            <p class="lead fw-normal mb-0">12345</p>
+                                            <p class="lead fw-normal mb-0">{{user_details[i][0]}}</p>
                                         </div>
                                         </div>
-                                        <div class="col-md-4 d-flex justify-content-center">
+                                        <div class="col-md-3 d-flex justify-content-center">
                                         <div>
                                             <p class="small text-muted mb-4 pb-2">Customer Address</p>
-                                            <p class="lead fw-normal mb-0">htgs ueiphs hvsuqnio</p>
+                                            <p class="lead fw-normal mb-0">{{user_details[i][1]}}</p>
                                         </div>
                                         </div>
-                                        <div class="col-md-4 d-flex justify-content-center">
+                                        <div class="col-md-3 d-flex justify-content-center">
                                         <div>
                                             <p class="small text-muted mb-4 pb-2">Date of Delivery</p>
-                                            <p class="lead fw-normal mb-0">22-04-2002</p>
+                                            <p class="lead fw-normal mb-0">{{dates[i]}}</p>
                                             </p>
                                         </div>
                                         </div>
@@ -70,7 +76,8 @@
                                     </div>                        
                                 </div>
                             </div>
-                        {% endfor %}
+                            {% endfor %}
+                        
                     
                     <!-- <div class="card mb-4 border-dark">
                         <div class="card-body p-4">

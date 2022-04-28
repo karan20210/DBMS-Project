@@ -40,31 +40,30 @@
                     <div class="d-flex">
                         <p><span class="h2">Your Orders </span>
                         </div>
-
-                        {% for i in products %}
+                        {% for i in range(orders | length)%}
                             <div class="card mb-4 border-dark">
                                 <div class="card-body p-4">
                         
                                     <div class="row align-items-center">
                                         <div class="col-md-2">
-                                        <img src={{i[8]}} class="img-fluid" alt="Generic placeholder image">
+                                        <img src={{img[i]}} class="img-fluid" alt="Generic placeholder image">
                                         </div>
                                         <div class="col-md-3 d-flex justify-content-center">
                                         <div>
                                             <p class="small text-muted mb-4 pb-2">Name</p>
-                                            <p class="lead fw-normal mb-0">{{i[2]}}</p>
+                                            <p class="lead fw-normal mb-0">{{orders[i][2]}}</p>
                                         </div>
                                         </div>
                                         <div class="col-md-3 d-flex justify-content-center">
                                         <div>
                                             <p class="small text-muted mb-4 pb-2">Customer ID</p>
-                                            <p class="lead fw-normal mb-0">12045</p>
+                                            <p class="lead fw-normal mb-0">{{orders[i][5]}}</p>
                                         </div>
                                         </div>
                                         <div class="col-md-2 d-flex justify-content-center">
                                         <div>
                                             <p class="small text-muted mb-4 pb-2">Track Order</p>
-                                                <button type="button" class="btn btn-primary align-end btn-md border-dark">Track order<a href = "/addproducts/{{details[0]}}"> </a> </button>
+                                                <button type="button" class="btn btn-primary align-end btn-md border-dark"> <a href = "/track/{{orders[i][5]}}/{{orders_info[i]}}" style="color: white;"> Track order </a> </button>
                                             </p>
                                         </div>
                                         </div>
@@ -72,8 +71,8 @@
                                         </div>
                                     </div>                        
                                 </div>
-                            </div>
-                        {% endfor %}
+                            </div>        
+                        {% endfor %}                
                     
                     <!-- <div class="card mb-4 border-dark">
                         <div class="card-body p-4">
