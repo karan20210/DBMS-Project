@@ -5,8 +5,10 @@ from unicodedata import category
 from django.shortcuts import render
 from flask import Flask, redirect, render_template, request
 from flask_mysqldb import MySQL
+from pymysql import NULL
 import yaml
 import os
+import MySQLdb
 
 app = Flask(__name__)
 
@@ -16,9 +18,10 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root' 
-app.config['MYSQL_PASSWORD'] = 'Khwai0902'
+app.config['MYSQL_PASSWORD'] = 'karanb1809'
 app.config['MYSQL_DB'] = 'PROJECT'
 
+host = 'localhost'
 mysql = MySQL(app)
 
 d = ()
@@ -89,8 +92,8 @@ def dplogin():
 
     for i in records:
         if username == i[0] and pwd == i[1]:
-            print("Success")
-            break
+            l = "/dphomepage/" + str(i[2])
+            return redirect(l)
         else:
             print("Failure")
     mysql.connection.commit()
@@ -157,6 +160,12 @@ def sellerSignup():
     vals = (username, pwd, 'seller', int(sellerID))
     cur.execute(s, vals)
 
+    s = "CREATE USER '" + username + "'@'" + host + "' IDENTIFIED BY '" + pwd + "'"
+    cur.execute(s)
+
+    s = "GRANT SELECT ON seller to '" + username + "'@'localhost'"
+    cur.execute(s)
+    
     mysql.connection.commit()
     cur.close()
     return render_template('login.html')
@@ -173,11 +182,6 @@ def homepage(user_id):
     s = "select * from products"
     cur.execute(s)
     p = cur.fetchall()
-    # ps = []
-    # print(len(p))
-    # for i in range(3):
-    #     no = random.randint(0, len(p) - 1)
-    #     ps.append(p[no])   
     
     cart_price = getCurrentCartPrice(user_id)
 
@@ -194,10 +198,79 @@ def sellerhomepage(seller_id):
     cur.execute(s)
     p = cur.fetchall()
 
+    s = "select * from logindetails where type = 'seller' and id = " + str(seller_id)
+    cur.execute(s)
+    current_seller = cur.fetchall()[0]
+    username = current_seller[0]
+    pwd = current_seller[1]
+
     mysql.connection.commit()
-    cur.close()
+
+    host = 'localhost'
+    user = username
+    passwd = pwd
+    db = 'project'
+
+    mysql_seller = MySQLdb.connect(host, user, passwd, db)
+    seller_cursor = mysql_seller.cursor()
+
+    s = "SELECT TABLE_SCHEMA,TABLE_NAME FROM INFORMATION_SCHEMA.VIEWS where TABLE_SCHEMA = 'PROJECT' AND TABLE_NAME = 'my_orders_info" + str(seller_id) + "'"
+    cur.execute(s)
+    if(len(cur.fetchall()) == 0):
+        s = "create view my_orders_info" + str(seller_id) + " as select s.seller_id, s.name as seller_name, p.name as product_name, p.price, c.quantity_ordered, c.ccustomerid as customer_id, c.cart_id as cart_id from seller s inner join products p on s.seller_id = p.seller_id inner join cart c on c.product_id = p.product_id and c.cart_id in (select cart_id from orders) where s.seller_id = " + str(seller_id)
+        cur.execute(s)
+
+    s = "GRANT SELECT ON my_orders_info" + str(seller_id) + " TO '" + username + "'@'localhost'"
+    cur.execute(s)
+
+    si = "select * from my_orders_info" + str(seller_id)
+    seller_cursor.execute(si)
+    # print(seller_cursor.fetchall())
+
 
     return render_template('sellerhomepage.html', details = d, products = p)
+
+@app.route("/sellerorderinfo/<user_id>")
+def seller_order_info(user_id):
+    d = getSellerDetails(user_id)
+    cur = mysql.connection.cursor()
+    s = "select * from logindetails where type = 'seller' and id = " + str(user_id)
+    cur.execute(s)
+    current_seller = cur.fetchall()[0]
+    username = current_seller[0]
+    pwd = current_seller[1]
+
+    mysql.connection.commit()
+
+    host = 'localhost'
+    user = username
+    passwd = pwd
+    db = 'project'
+
+    mysql_seller = MySQLdb.connect(host, user, passwd, db)
+    seller_cursor = mysql_seller.cursor()
+
+    s = "select * from my_orders_info" + str(user_id)
+    seller_cursor.execute(s)
+    orders = seller_cursor.fetchall()
+    # print(orders)
+
+    orders_info = []
+    for i in orders:
+        customer_id = i[5]
+        cart_id = i[6]
+        s = "select * from orders where ocustomerid = " + str(customer_id) + " and cart_id = " + str(cart_id)
+        cur.execute(s)
+        orders_info.append(cur.fetchall()[0][0])
+    
+    product_images = []
+    for i in orders:
+        product_name = i[2]
+        s = "select imagesource from products p where p.name = '" + str(product_name) + "'"
+        cur.execute(s)
+        product_images.append(cur.fetchall()[0][0])
+    print(product_images)
+    return render_template("sellerOrderInfo.html", details = d, orders = orders, orders_info = orders_info, img = product_images)
 
 @app.route("/addproducts/<seller_id>")
 def addProductsPage(seller_id):
@@ -220,8 +293,10 @@ def newProduct(seller_id):
     product_id = len(p) + 1
 
     s = "select category_id from categories where category_name = '" + category + "'"
+    print(s)
     cur.execute(s)
     p = cur.fetchall()
+    print(p)
     category_id = p[0][0]
 
     file = request.files['product_image']
@@ -613,17 +688,20 @@ def myOrders(user_id):
     cur.execute(s)
     orders = []
     for i in cur.fetchall():
-        print(i)
         cart_id = i[3]
         order_id = i[0]
         no_of_products = getNumberOfProducts(user_id, cart_id)
         order_date = i[2]
 
+        s = "select order_status from deliveries where order_id = " + str(order_id)
+        cur.execute(s)
+        status = cur.fetchall()[0][0]
+
         order = []
         order.append(order_id)
         order.append(no_of_products)
         order.append(order_date)
-        
+        order.append(status)
         orders.append(order)
 
     s = "drop view my_orders"
@@ -828,6 +906,109 @@ def categoryPageStars(category_id, user_id, stars):
 
     return render_template("category.html", details = d, categories = categories, products = products, category = category)
 
+@app.route("/dphomepage/<dp_id>")
+def dp_homepage(dp_id):
+    cur = mysql.connection.cursor()
+    s = "select name from delivery_person where dp_id = " + str(dp_id)
+    cur.execute(s)
+    name = cur.fetchall()[0][0]
+
+    s = "select * from logindetails where type = 'dp' and id = " + str(dp_id)
+    cur.execute(s)
+    current_seller = cur.fetchall()[0]
+    username = current_seller[0]
+    pwd = current_seller[1]
+
+    mysql.connection.commit()
+
+    host = 'localhost'
+    user = username
+    passwd = pwd
+    db = 'project'
+
+    mysql_seller = MySQLdb.connect(host, user, passwd, db)
+    dp_cursor = mysql_seller.cursor()
+
+    s = "GRANT"
+
+    dates = []
+    order_ids = []
+    s = "select * from deliveries d where d.order_status = 'On the Way' and d.dp_id = " + str(dp_id)
+    cur.execute(s)
+    for i in cur.fetchall():
+        dates.append(i[3])
+        order_ids.append(i[0])
+    
+    user_details = []
+    s = "SELECT TABLE_SCHEMA,TABLE_NAME FROM INFORMATION_SCHEMA.VIEWS where TABLE_SCHEMA = 'PROJECT' AND TABLE_NAME = 'dp_pending_orders" + str(dp_id) + "'"
+    cur.execute(s)
+    if(len(cur.fetchall()) == 0):
+        s = "create view dp_pending_orders" + str(dp_id) + " as select customer_id, address from customer where customer_id in (select ocustomerid from orders o where o.order_id in (select order_id from deliveries d where d.order_status = 'On the Way' and d.dp_id = " + str(dp_id) + "))"
+        cur.execute(s)
+
+    s = "GRANT SELECT ON dp_pending_orders" + str(dp_id) + " TO '" + username + "'@'localhost'"
+    cur.execute(s)
+
+    s = "select * from dp_pending_orders" + str(dp_id)
+    dp_cursor.execute(s)
+    for i in dp_cursor.fetchall():
+        user_details.append(i)
+    
+
+    return render_template("dphomepage.html", name = name, dates = dates, user_details = user_details, dp_id = dp_id, orders = order_ids)
+
+@app.route("/deliveryhistory/<dp_id>")
+def deliveryhistory(dp_id):
+    cur = mysql.connection.cursor()
+    s = "select name from delivery_person where dp_id = " + str(dp_id)
+    cur.execute(s)
+    name = cur.fetchall()[0][0]
+
+    s = "select * from logindetails where type = 'dp' and id = " + str(dp_id)
+    cur.execute(s)
+    current_seller = cur.fetchall()[0]
+    username = current_seller[0]
+    pwd = current_seller[1]
+
+    mysql.connection.commit()
+
+    host = 'localhost'
+    user = username
+    passwd = pwd
+    db = 'project'
+
+    mysql_seller = MySQLdb.connect(host, user, passwd, db)
+    dp_cursor = mysql_seller.cursor()
+
+    s = "GRANT"
+
+    dates = []
+    order_ids = []
+    s = "select * from deliveries d where d.order_status = 'Delivered' and d.dp_id = " + str(dp_id)
+    cur.execute(s)
+    for i in cur.fetchall():
+        dates.append(i[3])
+        order_ids.append(i[0])
+    
+    user_details = []
+    s = "SELECT TABLE_SCHEMA,TABLE_NAME FROM INFORMATION_SCHEMA.VIEWS where TABLE_SCHEMA = 'PROJECT' AND TABLE_NAME = 'dp_order_history" + str(dp_id) + "'"
+    cur.execute(s)
+    if(len(cur.fetchall()) == 0):
+        s = "create view dp_order_history" + str(dp_id) + " as select customer_id, address from customer where customer_id in (select ocustomerid from orders o where o.order_id in (select order_id from deliveries d where d.order_status = 'Delivered' and d.dp_id = " + str(dp_id) + "))"
+        cur.execute(s)
+
+    s = "GRANT SELECT ON dp_order_history" + str(dp_id) + " TO '" + username + "'@'localhost'"
+    cur.execute(s)
+
+    s = "select * from dp_order_history" + str(dp_id)
+    dp_cursor.execute(s)
+    for i in dp_cursor.fetchall():
+        user_details.append(i)
+    print(user_details)
+    print(dates)
+
+    return render_template("dphistory.html", name = name, dates = dates, user_details = user_details, dp_id = dp_id, orders = order_ids)
+
 # Helper functions
 def getDetails(user_id):
     cur = mysql.connection.cursor()
@@ -957,6 +1138,13 @@ def getNumberOfProducts(user_id, cart_id):
     s = "select * from cart where cart_id = " + str(cart_id) + " and ccustomerid = " + str(user_id)
     cur.execute(s)
     return len(cur.fetchall())
+
+def getSellerDetails(user_id):
+    cur = mysql.connection.cursor()
+
+    s = "select * from seller where seller_id = " + str(user_id)
+    cur.execute(s)
+    return cur.fetchall()[0]
 
 if(__name__ == "__main__"):
     app.run(debug = True)
