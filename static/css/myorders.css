@@ -132,13 +132,21 @@
 }
 
 .order .btn.btn-primary {
-    background-color: #fff;
-    color: #4e2296;
-    border: 1px solid #4e2296
+    background-color: #28168b;
+    color: #fff;
+    border: 1px solid
+}
+
+a {
+    color: #fff
+}
+
+a:hover {
+    color: #fff
 }
 
 .order .btn.btn-primary:hover {
-    background-color: #4e2296;
+    background-color: #292fa3;
     color: #fff
 }
 
