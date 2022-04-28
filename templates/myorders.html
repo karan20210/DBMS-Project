@@ -76,6 +76,9 @@
                                         <div class="status">Status : {{orders[i][3]}}</div>
                                         <div class="btn btn-primary text-uppercase"><a href = "/track/{{details[0]}}/{{orders[i][0]}}">Track Status</a></div>
                                         <div class="btn btn-primary text-uppercase"> <a href="/orderinfo/{{orders[i][0]}}/{{details[0]}}">Order info</a> </div>
+                                        {% if orders[i][3] == "Delivered" %}
+                                        <div class="btn btn-primary text-uppercase"> <a href="/return/{{orders[i][0]}}/{{details[0]}}">Return item</a> </div>
+                                        {% endif %}
                                     </div>                        
                                 </div>
                             </div>

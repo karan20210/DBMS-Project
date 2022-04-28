@@ -1009,6 +1009,36 @@ def deliveryhistory(dp_id):
 
     return render_template("dphistory.html", name = name, dates = dates, user_details = user_details, dp_id = dp_id, orders = order_ids)
 
+@app.route("/return/<order_id>/<user_id>")
+def return_item(order_id, user_id):
+    cur = mysql.connection.cursor()
+    s = "select count(*) from delivery_person"
+    cur.execute(s)
+    no = cur.fetchall()[0][0]
+
+    dp_id = random.randint(1, no)
+
+    date = datetime.today().strftime('%Y-%m-%d')
+
+    s = "Insert into returns values(%s, %s, %s, %s)"
+    vals = (int(order_id), int(dp_id), "Returned", date)
+    cur.execute(s,vals)
+    mysql.connection.commit()
+
+    s = "update deliveries set order_status = 'Returned' where order_id = " + str(order_id)
+    cur.execute(s)
+    mysql.connection.commit()
+
+    s = "select amount from payment where orderid = " + str(order_id)
+    cur.execute(s)
+    price = cur.fetchall()[0][0]
+
+    s = "update customer set points = points + " + str(price) + " where customer_id = " + str(user_id) 
+    cur.execute(s)
+    mysql.connection.commit()
+    return "Returned"
+
+
 # Helper functions
 def getDetails(user_id):
     cur = mysql.connection.cursor()
