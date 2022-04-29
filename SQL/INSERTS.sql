@@ -64,3 +64,6 @@ GRANT SELECT ON delivery_person to 'Laurene Edworthie'@'localhost';
 GRANT SELECT ON delivery_person to 'Auberta Poulney'@'localhost';
 GRANT SELECT ON delivery_person to 'Ramsay Moiser'@'localhost';
 GRANT SELECT ON delivery_person to 'Marcelle Flinn'@'localhost';
+
+use project;
+show tables;

@@ -1,4 +1,4 @@
-# from crypt import methods
+from crypt import methods
 from datetime import date, datetime
 import random
 from unicodedata import category
@@ -18,13 +18,26 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root' 
-app.config['MYSQL_PASSWORD'] = 'Khwai0902'
+app.config['MYSQL_PASSWORD'] = 'karanb1809'
 app.config['MYSQL_DB'] = 'PROJECT'
 
 host = 'localhost'
 mysql = MySQL(app)
 
 d = ()
+
+@app.route("/search/<user_id>", methods = ['GET', 'POST'])
+def search(user_id):
+    d = getDetails(user_id)
+    name = request.form['name']
+    print(name)
+    cur = mysql.connection.cursor()
+    s = "select * from products where name = '" + str(name) + "'"
+    cur.execute(s)
+    products = cur.fetchall()
+    category = []
+    category.append([1, name])
+    return render_template("category.html", details = d, products = products, category = category)
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -1033,8 +1046,6 @@ def deliveryhistory(dp_id):
 
     mysql_seller = MySQLdb.connect(host, user, passwd, db)
     dp_cursor = mysql_seller.cursor()
-
-    s = "GRANT"
 
     dates = []
     order_ids = []
