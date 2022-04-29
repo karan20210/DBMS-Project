@@ -48,7 +48,7 @@ html, body {
     margin-bottom: 20px;
   }
   .product-description span {
-    font-size: 12px;
+    font-size: 17px;
     color: #358ED7;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -201,6 +201,18 @@ html, body {
     text-decoration: none;
   }
 
+  .add-to-cart {
+    background-color: #28168b;
+  }
+
+  .seller-details-heading {
+    font-size: larger;
+  }
+
+  .add-to-cart:hover {
+    background-color: #292fa3;
+  }
+
   /* Responsive */
   @media (max-width: 940px) {
     .container {
@@ -249,7 +261,7 @@ html, body {
         margin: 0 -24px;
     }
     .graph-star-rating-header .star-rating {
-        font-size: 17px;
+        font-size: 20px;
     }
     .progress {
         background: #f2f4f8 none repeat scroll 0 0;
@@ -365,7 +377,7 @@ html, body {
         margin: 0 -24px;
     }
     .graph-star-rating-header .star-rating {
-        font-size: 17px;
+        font-size: 20px;
     }
     .progress {
         background: #f2f4f8 none repeat scroll 0 0;
