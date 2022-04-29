@@ -1,14 +1,3 @@
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (1,  'Karan Baboota', 'karanbaboota@gmail.com', '7291070242', '2021-05-11', 'Amar Colony');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (2,  'Florie Giordano', 'fgiordano1@elegantthemes.com', '637-452-1702', '2021-05-11', '6182 Morningstar Way');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (3,  'Gilly Sumption', 'gsumption2@bbc.co.uk', '545-132-2618', '2022-02-24', '3 Moulton Road');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (4,  'Godfry Peppett', 'gpeppett3@bing.com', '295-885-6109', '2021-08-06', '31 Montana Parkway');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (5,  'Josh Ribbens', 'jribbens4@ftc.gov', '696-534-6271', '2021-10-19', '8307 Columbus Avenue');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (6,  'Roi Carmo', 'rcarmo5@wunderground.com', '464-359-6503', '2021-04-03', '89639 Iowa Road');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (7,  'Red Lutas', 'rlutas6@ihg.com', '138-570-4639', '2022-01-11', '8626 Fairfield Pass');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (8,  'Delcina Bluschke', 'dbluschke7@istockphoto.com', '605-933-8785', '2021-08-22', '2435 Fuller Parkway');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (9,  'Yancy Sweynson', 'ysweynson8@hexun.com', '863-260-8965', '2021-08-01', '32 Karstens Point');
-insert into CUSTOMER (Customer_ID, Name, Email, Contact_No, Reg_Date, Address) values (10,  'Alberta Dimic', 'adimic9@macromedia.com', '198-883-7075', '2021-04-16', '6 Forest Place');
-
 insert into CATEGORIES (Category_ID, Category_Name) values (1, 'Laptops');
 insert into CATEGORIES (Category_ID, Category_Name) values (2, 'Washing Machine');
 insert into CATEGORIES (Category_ID, Category_Name) values (3, 'Cycle');
@@ -19,17 +8,6 @@ insert into CATEGORIES (Category_ID, Category_Name) values (7, 'Trousers');
 insert into CATEGORIES (Category_ID, Category_Name) values (8, 'Headphones');
 insert into CATEGORIES (Category_ID, Category_Name) values (9, 'Mobiles');
 insert into CATEGORIES (Category_ID, Category_Name) values (10, 'Refrigerator');
-
-insert into Seller (Seller_ID, Name, Location, Contact_No ,Email_ID) values (1,  'Gerhardt Logie'      ,'1136 East Point'         , '439-650-0863', 'glogiea@globo.com'               );
-insert into Seller (Seller_ID, Name, Location, Contact_No ,Email_ID) values (2,  'Diandra Girogetti'   , '33 Linden Pass'         , '306-219-1941', 'dgirogettib@constantcontact.com' );
-insert into Seller (Seller_ID, Name, Location, Contact_No ,Email_ID) values (3,  'Concordia Jennings'  ,'4 Mayfield Parkway'      , '500-607-0548', 'cjenningsc@timesonline.co.uk'    );
-insert into Seller (Seller_ID, Name, Location, Contact_No ,Email_ID) values (4,  'Darice Borthe'       , '131 Vermont Hill'       , '622-483-7736', 'dborthed@sakura.ne.jp'           );
-insert into Seller (Seller_ID, Name, Location, Contact_No ,Email_ID) values (5,  'Jarrett Brewse'      , '61 Kennedy Center'      , '376-687-9181', 'jbrewsee@eepurl.com'             );
-insert into Seller (Seller_ID, Name, Location, Contact_No ,Email_ID) values (6,  'Tanya Quartley'      , '29318 Kingsford Hill'   , '816-206-2782', 'tquartleyf@guardian.co.uk'       );
-insert into Seller (Seller_ID, Name, Location, Contact_No ,Email_ID) values (7,  'Hank Goodright'      , '212 Burning Wood Pass'  , '963-350-6857', 'hgoodrightg@dot.gov'             );
-insert into Seller (Seller_ID, Name, Location, Contact_No ,Email_ID) values (8,  'Christan Leech'      , '453 Vidon Junction'     , '120-370-7912', 'cleechh@desdev.cn'               );
-insert into Seller (Seller_ID, Name, Location, Contact_No ,Email_ID) values (9,  'Nadine Janisson'     , '32877 Walton Place'     , '475-486-7497', 'njanissoni@odnoklassniki.ru'     );
-insert into Seller (Seller_ID, Name, Location, Contact_No ,Email_ID) values (10,  'Brinn Hurworth'      , '9 Dorton Hill'          , '484-894-0621', 'bhurworthj@seesaa.net'           );
 
 insert into PRODUCTS (Product_ID, Category_ID, Name, Price, Quantity_Available, Seller_ID, Days_to_Arrive, Description, ImageSource) values (1, 1, 'External Supplier', 6721.89, 37, 1, 3, '','../static/images/Carousel1.jpg');
 insert into PRODUCTS (Product_ID, Category_ID, Name, Price, Quantity_Available, Seller_ID, Days_to_Arrive, Description, ImageSource) values (2, 6, 'Bread - Corn Muffaletta', 6125.82, 65, 2, 8, '','../static/images/Carousel2.jpg');
@@ -63,17 +41,26 @@ insert into REVIEWS (Review_ID, Text, Stars, RCustomerID, Product_ID, TimeStamp)
 insert into REVIEWS (Review_ID, Text, Stars, RCustomerID, Product_ID, TimeStamp) values (19, 'Suspendisse potenti.', 4, 7, 1, '2021-07-29 16:10:01');
 insert into REVIEWS (Review_ID, Text, Stars, RCustomerID, Product_ID, TimeStamp) values (20, 'Maecenas tincidunt lacus at velit.', 3, 10, 5, '2021-07-17 08:44:27');
 
-delete from cart where Cart_ID=1 or Cart_ID=2 or Cart_ID=3;
-insert into CART (Cart_ID, CCustomerID, Product_ID, Quantity_Ordered) values (1, 1, 1, 1);
-insert into CART (Cart_ID, CCustomerID, Product_ID, Quantity_Ordered) values (1, 1, 2, 2);
-insert into CART (Cart_ID, CCustomerID, Product_ID, Quantity_Ordered) values (1, 1, 3, 1);
-insert into CART (Cart_ID, CCustomerID, Product_ID, Quantity_Ordered) values (1, 2, 2, 3);
-insert into CART (Cart_ID, CCustomerID, Product_ID, Quantity_Ordered) values (1, 2, 1, 5);
-insert into CART (Cart_ID, CCustomerID, Product_ID, Quantity_Ordered) values (2, 1, 5, 4);
-insert into CART (Cart_ID, CCustomerID, Product_ID, Quantity_Ordered) values (1, 3, 1, 3);
-insert into CART (Cart_ID, CCustomerID, Product_ID, Quantity_Ordered) values (1, 3, 9, 2);
-insert into CART (Cart_ID, CCustomerID, Product_ID, Quantity_Ordered) values (2, 2, 5, 1);
-insert into CART (Cart_ID, CCustomerID, Product_ID, Quantity_Ordered) values (2, 2, 7, 2);
-insert into CART (Cart_ID, CCustomerID, Product_ID, Quantity_Ordered) values (3, 1, 6, 2);
+insert into Delivery_Person (DP_ID, Name , DOJ, Contact) values (1, 'Faye Cropp'          ,  '2021-09-23',  '667-802-6236');
+insert into Delivery_Person (DP_ID, Name , DOJ, Contact) values (2, 'Laurene Edworthie'   ,  '2021-03-30',  '711-710-6135');
+insert into Delivery_Person (DP_ID, Name , DOJ, Contact) values (3, 'Auberta Poulney'     ,  '2021-07-22',  '974-185-0770');
+insert into Delivery_Person (DP_ID, Name , DOJ, Contact) values (4, 'Ramsay Moiser'       ,  '2021-07-12',  '218-766-9224');
+insert into Delivery_Person (DP_ID, Name , DOJ, Contact) values (5, 'Marcelle Flinn'      ,  '2021-05-06',  '149-283-1108');
 
-insert into LoginDetails(Username, Password, Type, id) values ('karanbaboota', 'pwd', 'customer', 1);
+insert into logindetails values('Faye Cropp', 'pwd', 'dp', 1);
+insert into logindetails values('Laurene Edworthie', 'pwd', 'dp', 2);
+insert into logindetails values('Auberta Poulney', 'pwd', 'dp', 3);
+insert into logindetails values('Ramsay Moiser', 'pwd', 'dp', 4);
+insert into logindetails values('Marcelle Flinn', 'pwd', 'dp', 5);
+
+CREATE USER 'Faye Cropp'@'localhost' IDENTIFIED BY 'pwd';
+CREATE USER 'Laurene Edworthie'@'localhost' IDENTIFIED BY 'pwd';
+CREATE USER 'Auberta Poulney'@'localhost' IDENTIFIED BY 'pwd';
+CREATE USER 'Ramsay Moiser'@'localhost' IDENTIFIED BY 'pwd';
+CREATE USER 'Marcelle Flinn'@'localhost' IDENTIFIED BY 'pwd';
+
+GRANT SELECT ON delivery_person to 'Faye Cropp'@'localhost';
+GRANT SELECT ON delivery_person to 'Laurene Edworthie'@'localhost';
+GRANT SELECT ON delivery_person to 'Auberta Poulney'@'localhost';
+GRANT SELECT ON delivery_person to 'Ramsay Moiser'@'localhost';
+GRANT SELECT ON delivery_person to 'Marcelle Flinn'@'localhost';
