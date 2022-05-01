@@ -1,4 +1,4 @@
-from crypt import methods
+# from crypt import methods
 from datetime import date, datetime
 import random
 from unicodedata import category
