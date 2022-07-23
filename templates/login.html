@@ -23,9 +23,28 @@
           });
         });
         </script>
+
+        <style>
+              .logo
+              {
+                height: 33%;
+                width: 35%;
+                margin-left: 32%;
+                margin-top: 5%;
+              }
+
+              body {
+              color: #666;
+              background: #002b46;  /* fallback for old browsers */
+              background: -webkit-linear-gradient(to right, #1CB5E0, #002b46);  /* Chrome 10-25, Safari 5.1-6 */
+              background: linear-gradient(to right, #1CB5E0, #002b46); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+              font: 16px/26px "Raleway", sans-serif; 
+              }
+        </style>
     </HEAD>
 
     <BODY>
+      <img src="../static/images/logo.png" class = "logo"> 
         <div class="form-wrap">
             <div class="tabs">
               <h3 class="customer-tab"><a class="active" href="#customer-tab-content">Customer</a></h3>
@@ -35,6 +54,9 @@
         
             <div class="tabs-content">
               <div id="customer-tab-content" class="active">
+                {% for m in get_flashed_messages() %}
+                <div class = "alert alert-primary"><p style = "color:red"> {{m}} </p></div>  
+                {% endfor %}            
                 <form class="customer-form" action="/customerlogin" method="post">
                   <input type="text" class="input" id="user_name" autocomplete="off" placeholder="Username" name = "username">
                   <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password" name = "password">
@@ -67,6 +89,6 @@
                 </div><!--.help-text-->
               </div><!--.seller-tab-content-->
             </div><!--.tabs-content-->
-          </div><!--.form-wrap-->    
+          </div><!--.form-wrap-->              
     </BODY>
 </HTML>

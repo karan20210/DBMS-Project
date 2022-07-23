@@ -3,7 +3,7 @@ from datetime import date, datetime
 import random
 from unicodedata import category
 from django.shortcuts import render
-from flask import Flask, redirect, render_template, request
+from flask import Flask, redirect, render_template, request, flash
 from flask_mysqldb import MySQL
 # from pymysql import NULL
 import yaml
@@ -25,6 +25,10 @@ host = 'localhost'
 mysql = MySQL(app)
 
 d = ()
+
+@app.route("/")
+def intro():
+    return render_template("intro.html"), {"Refresh": "5; url=/login"}
 
 @app.route("/search/<user_id>", methods = ['GET', 'POST'])
 def search(user_id):
@@ -69,6 +73,7 @@ def customerlogin():
     mysql.connection.commit()
     cur.close()
 
+    flash("Incorrect Username Or Password")
     return render_template('login.html')
 
 @app.route("/sellerlogin", methods = ['POST'])
@@ -1289,4 +1294,6 @@ def getSellerDetails(user_id):
     return cur.fetchall()[0]
 
 if(__name__ == "__main__"):
+    app.secret_key = 'super secret key'
+    app.config['SESSION_TYPE'] = 'filesystem'
     app.run(debug = True)
